@@ -1,0 +1,7 @@
+# Ignore these files
+*.pdf
+build/**
+ref/**
+
+# Dont ignore this file
+!build/README.md
