@@ -4,14 +4,27 @@
 %----------------------------------------------------------------------------------------
 
 \documentclass[12pt]{article}
+
+%Font and Language
 \usepackage[english]{babel}
-\usepackage[utf8x]{inputenc}
-\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\RequirePackage{lmodern}
+\RequirePackage[scaled]{helvet}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lettrine} 
+
+%Grpahics
 \usepackage{graphicx}
 \usepackage[colorinlistoftodos]{todonotes}
 
+% Bibliography
+\RequirePackage[babel]{csquotes}
+\RequirePackage[backend=biber, style=numeric-comp,maxnames=99,maxalphanames=5]{biblatex}
+\usepackage[algo2e]{algorithm2e} 
 
-%\addbibresource{mybib.bib}
+
+\addbibresource{mybib.bib}
 
 \begin{document}
 
@@ -72,7 +85,7 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 %	LOGO SECTION
 %----------------------------------------------------------------------------------------
 
-%\includegraphics{pic/logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+\includegraphics{pic/logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
  
 %----------------------------------------------------------------------------------------
 
@@ -87,6 +100,8 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 \listoftables
 
 %\listofalgorithms
+
+\newpage
 
 
 \begin{abstract}
@@ -115,12 +130,12 @@ Use the table and tabular commands for basic tables --- see Table~\ref{tab:widge
 
 % Commands to include a figure:
 
-%\begin{figure}%[tbhp]
-%\centering
-%\includegraphics[width=.9\linewidth]{pic/localization-map.png}
-%\caption{Example picture}
-%\label{fig:frog}
-%\end{figure}
+\begin{figure}%[tbhp]
+\centering
+\includegraphics[width=.9\linewidth]{pic/localization-map.png}
+\caption{Example picture}
+\label{fig:frog}
+\end{figure}
 
 \begin{table}
 \centering
@@ -153,7 +168,10 @@ You can make lists with automatic numbering \dots
 \item and like this.
 \end{itemize}
 
-We hope you find write\LaTeX\ useful, and please let us know if you have any feedback using the help menu above. \cite{bir}
+We hope you find write\LaTeX\ useful, and please let us know if you have any feedback using the help menu above. 
+TestCite1 \cite{bir} 
+TestCite2 \cite{pycl} 
+TestCite3 \cite{spata}
 
 \section{Components}
 
@@ -172,6 +190,6 @@ We hope you find write\LaTeX\ useful, and please let us know if you have any fee
 \subsection{SmartMPSDockingRobocup}
 	\input{components/docking.tex}
 
-%\printbibliography
+\printbibliography
 
 \end{document}
