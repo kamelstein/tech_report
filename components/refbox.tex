@@ -1,1 +1,20 @@
-This is the RefboxServer
+
+\subsubsection{General}
+
+The Referee Box (Refbox) is an external component build by Aachen University. This component controls, monitors, and evaluates the game during the Robocup. It communicates with robots of both teams and the MPS, attributes the points and manages the different phases of the game. To get more information, it is recommended to read the referee box manual located at \url{http://www.robocuplogistics.org/refbox}. To parametrize the Refbox, the file “config.yaml” should be modify. The most important part to change inside this file is the ip addresses.
+ 
+
+\subsubsection{Old situation}
+
+There was no permanent Refbox installed in the laboratory. Each team was forced to install on PC in the lab or on his own computer a Refbox with all necessary libraries.
+
+
+\subsubsection{Current situation}
+
+During this year, a permanent Refbox with all the necessary libraries for the Robocup 2017 version (tneumann/rcll17) have been installed on an independent laptop. Any person that need to test situations with the Refbox can take easily the laptop near his computer or access with XTightVncViewer.  To do this, it is necessary to run the server on the laptop with the command “tightvncserver”. Then it possible to access with the command “xtightvncviewer <<ipAdress>> :1”.  In the current network, the ip address was “172.26.1.112”. The Refbox changes regularly so it is necessary to update each new stable version of the Refbox. All versions can be seen with this link: https://git.fawkesrobotics.org/llsf-refbox.git. A contact with Tim Niemueller, one of the main developer of the Refbox, should be established to know the good version.
+
+
+\subsubsection{Difficulties}
+
+During the Robocup 2017, some difficulties have been faced. First, it is not possible to choose a zone for a MPS with the Refbox. It results that a successful test is more difficult to do in a smaller area. With this problem, we have use only check if the Refbox can detect the MPS report from robotinos. We were not interested by a correct report. Indeed, there are not MPS in the center of the field with the current generation done by the Refbox. Another problem was to get the last version of the Refbox. Indeed, the current version in the trunk during the Robocup was the Refbox 2016. It was needed to search in a branch to find the correct version of the Refbox. The setting of the network was not easy during the Robocup.
+
