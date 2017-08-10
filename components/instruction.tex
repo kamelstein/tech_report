@@ -11,10 +11,36 @@ there intention was.
 
 Describe the overall design of the instruction planner. Which ports are used and connected to other components. What are the tasks of the component and what purpose do they fulfill. 
 
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.25]{pic/SmartRobotinoInstructionPlaner.JPG}
+\caption{Model of InstructionPlanner}
+\end{figure}
 
-\subsubsection{Messages}
+
+\subsubsection{Communication Objects}
 
 Describe the messages which are processed by the instruction planner. 
+
+\begin{itemize}
+
+\item CommRefbox \\
+
+Describes the messages which come from the Refbox. This means that in this CommunicationObjecs the 
+Phases and States of the running tournament are encoded.
+
+\item MachineInfo \\
+
+The MachineInfo communication object is used to handover the information of detected MPS stations to the SmartRefBoxServer component. 
+
+\item MachineReport \\
+
+\item RobotInfo \\
+
+The RobotInfo is used to send the current state of the robot from the point of the refbox. This message is send from SmartRefboxServer to InstructionPlanner. 
+
+\end{itemize}
+
 
 \subsubsection{Statemachine}
 
