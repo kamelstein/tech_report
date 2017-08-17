@@ -19,29 +19,56 @@ Describe the overall design of the instruction planner. Which ports are used and
 \centering
 \includegraphics[scale=0.25]{pic/SmartRobotinoInstructionPlaner.JPG}
 \caption{Model of InstructionPlanner}
+\label{fig:i_overview}
 \end{figure}
 
 
-\subsubsection{Communication Objects}
+As shown in figure \ref{fig:i_overview} the SmartRobotinoInstructionPlanner has multiple input and output ports which are connected to components such as RefboxServer, MPSDetection or AlvarDetection. This connection is created over the SmartLispServer component using SmartTCL messages. On the other hand connections to the SmartLogisticsRefboxServer are done over communication objects which can be created inside smartsoft for data like the Phases, Maintenance and so on. For the connection between the Instruction Planner and the Refbox component a communication called CommRefbox is used. This object can be used to send certain data about the detected stations, exploration or production phase and the state of the robotino as seen by the 
+Refereebox. \\
 
-Describe the messages which are processed by the instruction planner. 
+\newpage
+
+Currently the CommRefbox communication object can be used to transmit the following data: 
 
 \begin{itemize}
 
-\item CommRefbox \\
+\item MessageType
 
-Describes the messages which come from the Refbox. This means that in this CommunicationObjecs the 
-Phases and States of the running tournament are encoded.
+This describes the message type. This needs to be done because in C++ the type of an object (even if we have polymorphism) can be not be derived. Therefore each message needs a message type. Valid message types are: GAMESTATE, EXPLORATION\_INFO, MACHINE\_INFO, MACHINE\_REPORT, ORDER\_INFO and 
+ROBOT\_INFO. 
 
-\item MachineInfo \\
+\item Gamestate
 
-The MachineInfo communication object is used to handover the information of detected MPS stations to the SmartRefBoxServer component. 
+The gamestate part of the communication object can be used to transmit the current gamestate from the RefBoxServer to the InstructionPlanner. The elements of this submessage is the state, phase and a timestamp. 
 
-\item MachineReport \\
+\item ExplorationInfo (deprecated)
 
-\item RobotInfo \\
+This was originally intended to transmit a set of zones which can include a MPS station for the team with a high probability. But because of new rules in the 2017 scenario this was dismissed. Therefore this message part is currently out of use. The explorationInfo contains a array of probable zones. 
 
-The RobotInfo is used to send the current state of the robot from the point of the refbox. This message is send from SmartRefboxServer to InstructionPlanner. 
+
+\item machineInfos
+
+The machineInfos message contains a list of six machineInfo which can be used as database for already detected MPS stations. The list of machineInfo begins with mInfo1 and ends with mInfo6.
+
+\item machineInfo
+
+The machineInfo message describes the position of a detected MPSstation with the X-Coordinate the Y-Coordinate and the orientation of the MPS-Station. This is exactly the data the Refereebox expects for a sucessfull detection of the station.
+
+
+\item machineReport
+
+
+The machineReport describes general information about the detected MPS stations. The informations which can be transmitted are the name of the MPS station, the zone where the MPS is localized, and the detected light signal. The lightsignal is deprecated in the 2017 scenario. 
+
+\item robotInfo and robotState
+
+These two message containers are used to transmit the current state of the robot as seen from the refbox. The state of the robot can be ACTIVE if everything works normal, MAINTENANCE if the team asked for a maintenance break to fix some issue of the robot or DISQUALIFIED if the robot was put into maintenance the second time or violated some rule of the contest. This message is used for internal monitoring of the contest from the robot site. For example if the robot returns from reconnects to the Referee Box from a maintenance break it can detect whether it can start to drive into the field again.  
+
+
+\item orderInfo
+
+//todo 
+
 
 \end{itemize}
 
