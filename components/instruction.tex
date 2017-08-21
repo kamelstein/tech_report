@@ -78,6 +78,39 @@ These two message containers are used to transmit the current state of the robot
 Describe the state machine with a diagram with states
 and transitions
 
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{pic/robotino_state_machine.png}
+\caption{The statemachine for the exploration phase scenario}
+\label{fig:statemachine}
+\end{figure}
+
+Figure \ref{fig:statemachine} shows the statemachine for the exploration phase scenario. This statemachine was implemented inside a class called RobotState. When the robotino software boots up the first state which is entered is the initial state. In this state the robot does nothing except that it waits for a signal by the referee box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into detection state. In the detection state the robot drives around the field and tries to detect MPSstations. The detection will be done by the MPSDocking component. If this component has found a station on the field it reports this back via the LispServer component to the InstructionPlanner. If a one or more MPSstations were found the Statemachine makes a transition to the Approaching state. \\
+
+In the Approaching state the robot is instructed to drive in front of the MPSstation which should later be scanned via the camera. If the robot has reached the goal (i.e. it stands in front of one of the docking points of the MPSstation) it transmits a message back which triggers the EV\_APPROACHED event. If the robot has not reached the goal (which is signaled over receiving the EV\_NOT\_APPROACHED event), the robot stays in the APPROACHING state until the goal is reached. Errorhandling is currently missing so it can be that the robotino stays in the APPROACHING state for a infinite amount of time. \\
+
+If the approaching of the MPS was successfull the robot can start to scan the AlvarTag which is fixed on the MPSstation. This tag is used to encode the meaning or functionality of the MPS station. The scanning is instructed in the TAG\_DETECTION state. The scanning of the tag can be applied up to five times because sometimes the AlvarTag is not detected successfully. If after five tries the tag is still not detected correctly, the tag will be ignored and the robotino tries to detect new MPSstation. This is done because of the time constraints in the exploration phase. \\
+
+If the the tag was scanned correctly it will be reported back to the Referee Box. This will be done in the REPORT\_MPS state. After this the statemachine changes into the DETECTION state. This will be done until the exploration phase is over.
+
+\subsubsection{Advantages and Disadvantages of this design} 
+
+\begin{itemize}
+
+\item Advantages
+
+
+//here will be the advantages
+
+
+\item Disadvantages
+
+//here will be the disadvantages
+
+
+\end{itemize}
+
+
 \subsubsection{Maintenance Modes}
 
 Describe how to team and the robot can react to failures and the system. How to set the robot into maintenance mode and how the robot can return to the game. 
