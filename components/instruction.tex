@@ -99,16 +99,44 @@ If the the tag was scanned correctly it will be reported back to the Referee Box
 
 \item Advantages
 
+For the design of the task instruction for the exploration phase, Event-driven finite-state machine was used. This pattern is often used in communication driven applications
+like telecom software or communication protocols. Because the robotino software is distributed between a lot of components and these components need all to be coordinated and instructed a major component is needed which brings this all under the hood. Therefore a state machine is a good way to represent the exploration phase. The state machine is made out of states which represent certain logic blocks of the exploration phase. \\
 
-//here will be the advantages
+
+Usually a logic block in the exploration phase is made out of a pattern:
+
+\begin{enumerate}
+
+\item InstructionPlanner send a message to a component.
+
+\item The component executes some task
+
+\item The InstructionPlanner receives a result if the task was executed sucessfully by the 
+component or not.  
+
+
+\end{enumerate}
+
+For this pattern a message or event-driven state machine is really good match because the fact that a component like the AlvarTagdetection executes some logic can be designed as a state. For transition between several states the sending and receiving of messages can be used. For example to start a scan of the AlvarTag by the AlvarTagDetection component, a SmartTCL message needs to be send to the component. This induces a state transition into the state the AlvarTagDetection component is instructed to scan the tag. After the AlvarTagDetection component has finished with scanning it sends back a message which contains the tag of the MPS or a failure as the result. Using this message another state transition can be performed. \\
+
+Because the exploration phase is made out of defined rules which the robot needs to be fulfill, this approach works well for this scenario. 
 
 
 \item Disadvantages
 
-//here will be the disadvantages
+A disadvantage is that the whole state machine needs to be handwritten by the developer because there is no tool included which can generate code out from a visual representation 
+of the state machine. Although this is possible to use a seperated tool, this is not included in smart soft. Therefore if a new logic block is added to the scenario by the rcll comitee this needs to be added by hand to the state machine. This can be a very time exhausting process if the state machine contains a lot of states. Therefore another design pattern might be better here which enables adding new logic blocks in a easier way. \\
+
+Also another big disadvantage of this design is that functionallity like this is already implemented inside the SmartSoft framework using the SmartTCL robotics behavior framework.
+This framework enables it to model certain logic blocks of the exploration phase as robotic behaviors like "drive to a position" or "make a picture". The whole exploration phase can modeled using these SmartTCL task blocks. Writing these task blocks can be done using a DSL language which is implemented in Common Lisp. A disadvantage is that this Lisp based DSL is 
+very different from general purpose languages like C++ or Java. But on the other side robotic tasks can be implemented easier. 
 
 
 \end{itemize}
+
+
+The current design is a hybrid out of SmartTCl and the event-driven finite state machine. The coordination between the components is done inside the C++ based RobotState class while the
+triggering of the components is done via the Common Lisp based SmartLispServer. In the future this can be moved more to the SmartTCL implementation were the robot behavior is implemented in the SmartTCL DSL. 
 
 
 \subsubsection{Maintenance Modes}
