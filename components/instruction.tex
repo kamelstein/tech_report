@@ -1,19 +1,31 @@
 \subsubsection{Overview}
+\label{sec:inst_overview}
 
-The SmartRobotinoInstructionPlanner component is currently responsible of the task coordinantion between all components of the Robocup Logistics Software. The intention of the previous team was that a master robot should process the information from the Robocup Logistics Refereebox and start instruction all other robots. The scenario application like driving, docking or detection should be implemented in the SmartLispServer component using the SmartTCL language. \\
+The SmartRobotinoInstructionPlanner component is responsible for the task coordination between all between various components used in the software written for the 
+Robotcup Logistics League. This component was introduced by the 2016 team of Ulm University of Applied Science. The intention behind this component was that a master robot should process the information received from the Robocup Logistics Referee Box and start instructing the other robotinos on the field. Different functionalities like driving around the field or detecting some MPS stations is implemented in various components but not in the SmartRobotinoInstructionPlanner component. For instructing these components a task sequencer (which is called SmartLispServe) is used and the task or logicblocks are written in a language called SmartTCL which is based on CommonLisp //todo cite to SmartTCL. \\ 
 
-The SmartRobotinoInstructionPlanner is connected to the Refbox Component using a bi-directional SmartSoft port. For transmitting data between those two components various communication objects are used. To the other components like the SmartMPSDetection, SmartAlvarTagDetection or the components which provide services like mapping or driving, the SmartRobotinoInstructionPlanner uses SmartTCL messages which are transferred by using strings and communication ports. 
+The SmartRobotinoInstructionPlanner is connected to the RefboxServer component using two SmartSoft ports. One port is for transmitting messages from the Referee Box to the Instruction Planner and the other is for sending information about detected MPS stations back to the Referee Box. For sending information between those two components, special communication objects are used which makes it easier to parse and process those messages. These messages are based on a special DSL for communication objects which are later converted to C++ classes. With these classes those messages can be easily processed within those components. //ref to SmartSoft Communication objects. \\
+
+The first design of the Instruction Planner was developed on the fact that when the exploration phase starts, the Referee Box sends a list of possible zones for the exploration. In these possible zones, MPS stations for the team can be located. It was intended that a master robot should process this list of zones and splits this list up into three parts. These parts can be deployed on all robotinos for exploring the field. This was the only intention of the SmartRobotinoInstructionPlanner, all other instruction logic should be implemented in the sequencer component. In 2017 the Robocup Logistics League committee removed these list of zones from the rules to make it harder for the teams to archive a successful exploration phase. Therefore the intentional implementation was now meaningless and therefore abandoned. So the meaning of the InstructionPlanner was moved more the the instruction of various components of the robotino software. \\
 
 
 \subsubsection{Previous implementation}
+
+//maybe will be discarded
 
 As described in (reference to book of knowledge) the InstructionPlanner was designed for planning and coordination of other components on the master robotino (the one who manages the connection between the Refbox and all robotinos) but also all other robotinos. This means that it was designed that on all slave robotinos only the necessary parts like driving, detection or docking should run. All coordination should be done by the instruction planner on the master robotino. The intention behind this idea was that the referee box was sending a list of probable zone which can contain a MPS station for detection. This list of MPS stations was then splitted by an algorithm into three parts (one for each robot), so that a concurrent exploration and detection of the gamefield can be archieved. In the 2017 scenario (link to 2017 rules) this feature was discarded from the competition. In the newer scenario there is no information whether there is a MPS station or not. Therefore this feature was also discared in the new design for the 2017 competition \ref{sec:new_design}.  \\
 
 
 
-\subsubsection{New Design}
+\subsubsection{Revised design of the SmartRobotinoInstructionPlanner}
 \label{sec:new_design}
-Describe the overall design of the instruction planner. Which ports are used and connected to other components. What are the tasks of the component and what purpose do they fulfill. 
+
+As described in \ref{sec:inst_overview} the 2016 design of the Instruction Planner was discarded and a new design was created. In the 2017 design of the instruction Planner the component is now responsible for the main control of the festo robotino. The task for the team in 2017 was to implement the exploration phase for the tournament. Therefore the main responsibility for the Instruction Planner is to instruct the components of the robotino in that way that a successful exploration phase is archived.     
+
+
+
+\subsubsection{Communication Objects Used in The InstructionPlanner}
+
 
 \begin{figure}[h]
 \centering
@@ -75,17 +87,19 @@ These two message containers are used to transmit the current state of the robot
 
 \subsubsection{Statemachine}
 
-Describe the state machine with a diagram with states
-and transitions
 
-\begin{figure}[h]
+Figure \ref{fig:statemachine} shows the statemachine for the exploration phase scenario. This statemachine was implemented inside a class called RobotState. When the robotino software boots up the first state which is entered is the initial state. In this state the robot does nothing except that it waits for a signal by the referee box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into detection state. In the detection state the robot drives around the field and tries to detect MPSstations. The detection will be done by the MPSDocking component. If this component has found a station on the field it reports this back via the LispServer component to the InstructionPlanner. If a one or more MPSstations were found the Statemachine makes a transition to the Approaching state. \\
+
+\newpage
+
+\begin{figure}
 \centering
-\includegraphics[scale=0.5]{pic/robotino_state_machine.png}
+\includegraphics[scale=0.25]{pic/robotino_state_machine.png}
 \caption{The statemachine for the exploration phase scenario}
 \label{fig:statemachine}
 \end{figure}
 
-Figure \ref{fig:statemachine} shows the statemachine for the exploration phase scenario. This statemachine was implemented inside a class called RobotState. When the robotino software boots up the first state which is entered is the initial state. In this state the robot does nothing except that it waits for a signal by the referee box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into detection state. In the detection state the robot drives around the field and tries to detect MPSstations. The detection will be done by the MPSDocking component. If this component has found a station on the field it reports this back via the LispServer component to the InstructionPlanner. If a one or more MPSstations were found the Statemachine makes a transition to the Approaching state. \\
+\newpage
 
 In the Approaching state the robot is instructed to drive in front of the MPSstation which should later be scanned via the camera. If the robot has reached the goal (i.e. it stands in front of one of the docking points of the MPSstation) it transmits a message back which triggers the EV\_APPROACHED event. If the robot has not reached the goal (which is signaled over receiving the EV\_NOT\_APPROACHED event), the robot stays in the APPROACHING state until the goal is reached. Errorhandling is currently missing so it can be that the robotino stays in the APPROACHING state for a infinite amount of time. \\
 
