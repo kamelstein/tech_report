@@ -101,11 +101,43 @@ Figure \ref{fig:statemachine} shows the statemachine for the exploration phase s
 
 \newpage
 
-In the Approaching state the robot is instructed to drive in front of the MPSstation which should later be scanned via the camera. If the robot has reached the goal (i.e. it stands in front of one of the docking points of the MPSstation) it transmits a message back which triggers the EV\_APPROACHED event. If the robot has not reached the goal (which is signaled over receiving the EV\_NOT\_APPROACHED event), the robot stays in the APPROACHING state until the goal is reached. Errorhandling is currently missing so it can be that the robotino stays in the APPROACHING state for a infinite amount of time. \\
 
-If the approaching of the MPS was successfull the robot can start to scan the AlvarTag which is fixed on the MPSstation. This tag is used to encode the meaning or functionality of the MPS station. The scanning is instructed in the TAG\_DETECTION state. The scanning of the tag can be applied up to five times because sometimes the AlvarTag is not detected successfully. If after five tries the tag is still not detected correctly, the tag will be ignored and the robotino tries to detect new MPSstation. This is done because of the time constraints in the exploration phase. \\
+The State machine contains the following states:
 
-If the the tag was scanned correctly it will be reported back to the Referee Box. This will be done in the REPORT\_MPS state. After this the statemachine changes into the DETECTION state. This will be done until the exploration phase is over.
+\begin{itemize}
+
+\item INITIAL 
+
+This is the first state the robot will transit into when launching up the robotino software for the robocup competition. In this state the robot makes connection to the Referee Box and registers to the Referee system. After this it waits at the starting position for a signal which indicates that the exploration phase has begun. By receiving this message the robot makes a transition into the DETECTION state.  
+
+
+\item DETECTION
+
+In this state the robot drives around the field by following a line which is predefined by a set of landmarks on the field. While driving to a landmark the robot tries to detect MPS stations by using it's LIDAR ( Light Detection and Ranging cite here) sensor in the MPSDocking component. In this state the robot has two choices what to do next. As said before the transition between two states is triggered by a message which is received by the SmartRobotinoInstructionPlanner from one of the other components. In case of the DETECTION state this can be either if there was no MPS detected by the LIDAR sensor the MPSDocking component sends a message back which triggers the event EV\_NO\_MPS\_FOUND. Then the robot stays in the state and tries to detect more MPS stations while driving to the next landmark.  \\
+
+If the MPSDocking component finds one or more MPS stations on the field this is transmitted to the Instruction Planner component. In this case a message is received with a list of all MPS stations, their docking points and the orientation is received. This triggers then a event with the name EV\_MPS\_FOUND. This event than induces a transition state to the APPROACHING state. 
+
+\item APPROACHING 
+
+This state is responsible for approaching a MPS station for a AlvarTagDetection or Docking operation. The robotino takes one of the MPS station which were detected in the previous state and drives in front of one of the docking points. Currently each MPS station has two docking points (one on the front and one on the back). To determine which docking point is the front or back, the AlvarTag needs to be scanned to find out the behavior of the MPS station. There are two outcomes in this state. If the goal (or the docking point) is not reached for now the robot stays in this state until the goal is reached. These actions are indicated by the events EV\_APPROACHED and EV\_NOT\_APPROACHED. Taking the first one of these two events can lead to a state transition into DETECTION state. This means that the robot is standing in front of the station and detection of the Alvartag can be started. 
+
+
+\item TAG\_DETECTION
+
+Detection of the AlvarTag fixed on the MPS station is done in the TAG\_DETECTION state. In this state the Instruction Planner sends a message to the AlvarTagDetection component to start the detection process. The AlvarTagDetection component than tries to detect the AlvarTag by taking pictures of the tag and runs an algorithm which can detect the information encoded in it. After the tag is detected from the AlvarTagDetection a message is send back to the Instruction Planner with the team color of the MPS station and the behavior of it (Ring Station, Cap Station and so on). Sometimes the tag is not detected correctly or it is an unknown tag the AlvarTagDetection sends back a message which triggers the EV\_FOUND\_NO\_TAG event. If this is the case the Instruction Planner retries the whole process for up to 5 times. If the tag is still not detected correctly after 5 times the Instruction Planner discards the tag detection and makes a transition into the DETECTION state. This is done due to the time constraints in the exploration phase. This is a sub-optimal solution because functionality like the quality of tag detection should not be a concern of the Instruction Planner but more the AlvarTagDetection. Therefore in the future this should be revised. \\
+
+If the AlvarTag on the MPS station was detected correctly by the AlvarTagDetection component the Instruction Planner has now all the information which is needed to reply this to Referee Box. This is indicated by EV\_FOUND\_TAG event which leads to a state transition into the REPORT\_MPS state.
+
+
+\item REPORT\_MPS
+
+In this state the acquired information about the detected MPS stations is gathered together and send to the Referee Box. First the Instruction Planner converts the AlvarTag information from an internal representation into a representation which can be understood by the Referee Box. To archive this the information is packed into a communication object which is then send to the RefboxServer component which it then relays it to the actual Referee Box computer by using the Google Protobuf message protocol.  \\
+
+After the information of the MPS station was transmitted to the Referee Box the Instruction Planner changes the state to the DETECTION state. Then the whole process is started again until the exploration phase is over. 
+
+
+\end{itemize}
+
 
 \subsubsection{Advantages and Disadvantages of this design} 
 
