@@ -2,95 +2,63 @@
 \label{sec:inst_overview}
 
 The SmartRobotinoInstructionPlanner component is responsible for the task coordination between all between various components used in the software written for the 
-Robotcup Logistics League. This component was introduced by the 2016 team of Ulm University of Applied Science. The intention behind this component was that a master robot should process the information received from the Robocup Logistics Referee Box and start instructing the other robotinos on the field. Different functionalities like driving around the field or detecting some MPS stations is implemented in various components but not in the SmartRobotinoInstructionPlanner component. For instructing these components a task sequencer (which is called SmartLispServe) is used and the task or logicblocks are written in a language called SmartTCL which is based on CommonLisp //todo cite to SmartTCL. \\ 
+Robocup Logistics League. This component was introduced by the 2016 team of Ulm University of Applied Science. The intention behind this component was that a master robot should process the information received from the Robocup Logistics Referee Box and start instructing the other Robotinos on the field. Different functionalities like driving around the field or detecting some MPS stations is implemented in various components but not in the SmartRobotinoInstructionPlanner component. For instructing these components a task sequencer (which is called SmartLispServer) is used and the task or logic blocks are written in a language called SmartTCL which is based on Common Lisp //todo cite to SmartTCL. \\ 
 
 The SmartRobotinoInstructionPlanner is connected to the RefboxServer component using two SmartSoft ports. One port is for transmitting messages from the Referee Box to the Instruction Planner and the other is for sending information about detected MPS stations back to the Referee Box. For sending information between those two components, special communication objects are used which makes it easier to parse and process those messages. These messages are based on a special DSL for communication objects which are later converted to C++ classes. With these classes those messages can be easily processed within those components. //ref to SmartSoft Communication objects. \\
 
-The first design of the Instruction Planner was developed on the fact that when the exploration phase starts, the Referee Box sends a list of possible zones for the exploration. In these possible zones, MPS stations for the team can be located. It was intended that a master robot should process this list of zones and splits this list up into three parts. These parts can be deployed on all robotinos for exploring the field. This was the only intention of the SmartRobotinoInstructionPlanner, all other instruction logic should be implemented in the sequencer component. In 2017 the Robocup Logistics League committee removed these list of zones from the rules to make it harder for the teams to archive a successful exploration phase. Therefore the intentional implementation was now meaningless and therefore abandoned. So the meaning of the InstructionPlanner was moved more the the instruction of various components of the robotino software. \\
+The first design of the Instruction Planner was developed on the fact that when the exploration phase starts, the Referee Box sends a list of possible zones for the exploration. In these possible zones, MPS stations for the team can be located. It was intended that a master robot should process this list of zones and splits this list up into three parts. These parts can be deployed on all Robotinos for exploring the field. This was the only intention of the SmartRobotinoInstructionPlanner, all other instruction logic should be implemented in the sequencer component. In 2017 the Robocup Logistics League committee removed these list of zones from the rules to make it harder for the teams to archive a successful exploration phase. Therefore the intentional implementation was now meaningless and therefore abandoned. So the meaning of the Instruction Planner was moved more the the instruction of various components of the Robotinos software. \\
 
 
 \subsubsection{Previous implementation}
+\label{sec:previous}
 
 //maybe will be discarded
 
-As described in (reference to book of knowledge) the InstructionPlanner was designed for planning and coordination of other components on the master robotino (the one who manages the connection between the Refbox and all robotinos) but also all other robotinos. This means that it was designed that on all slave robotinos only the necessary parts like driving, detection or docking should run. All coordination should be done by the instruction planner on the master robotino. The intention behind this idea was that the referee box was sending a list of probable zone which can contain a MPS station for detection. This list of MPS stations was then splitted by an algorithm into three parts (one for each robot), so that a concurrent exploration and detection of the gamefield can be archieved. In the 2017 scenario (link to 2017 rules) this feature was discarded from the competition. In the newer scenario there is no information whether there is a MPS station or not. Therefore this feature was also discared in the new design for the 2017 competition \ref{sec:new_design}.  \\
+As described in (reference to book of knowledge) the Instruction Planner was designed for planning and coordination of other components on the master Robotino (the one who manages the connection between the Refbox and all Robotinos) but also all other robotinos. This means that it was designed that on all slave robotinos only the necessary parts like driving, detection or docking should run. All coordination should be done by the instruction planner on the master robotino. The intention behind this idea was that the referee box was sending a list of probable zone which can contain a MPS station for detection. This list of MPS stations was then split by an algorithm into three parts (one for each robot), so that a concurrent exploration and detection of the game field can be archived. In the 2017 scenario (link to 2017 rules) this feature was discarded from the competition. In the newer scenario there is no information whether there is a MPS station or not. Therefore this feature was also discarded in the new design for the 2017 competition \ref{sec:new_design}.  \\
 
-
-
-\subsubsection{Revised design of the SmartRobotinoInstructionPlanner}
-\label{sec:new_design}
-
-As described in \ref{sec:inst_overview} the 2016 design of the Instruction Planner was discarded and a new design was created. In the 2017 design of the instruction Planner the component is now responsible for the main control of the festo robotino. The task for the team in 2017 was to implement the exploration phase for the tournament. Therefore the main responsibility for the Instruction Planner is to instruct the components of the robotino in that way that a successful exploration phase is archived.     
-
-
-
-\subsubsection{Communication Objects Used in The InstructionPlanner}
 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.25]{pic/SmartRobotinoInstructionPlaner.JPG}
-\caption{Model of InstructionPlanner}
-\label{fig:i_overview}
+\includegraphics[scale=0.5]{pic/2016_flow_graph.png}
+\caption{Flow of the instruction planner in the 2016 scenario}
+\label{fig:ip2016}
+
 \end{figure}
 
 
-As shown in figure \ref{fig:i_overview} the SmartRobotinoInstructionPlanner has multiple input and output ports which are connected to components such as RefboxServer, MPSDetection or AlvarDetection. This connection is created over the SmartLispServer component using SmartTCL messages. On the other hand connections to the SmartLogisticsRefboxServer are done over communication objects which can be created inside smartsoft for data like the Phases, Maintenance and so on. For the connection between the Instruction Planner and the Refbox component a communication called CommRefbox is used. This object can be used to send certain data about the detected stations, exploration or production phase and the state of the robotino as seen by the 
-Refereebox. \\
+As it can be seen in figure \ref{fig:ip2016} the 2016 design of the Instruction Planner was not a full implementation of the exploration phase. In 2016 the team implemented some basic functionality which enables it to drive around the field and react on a gamestate. But nonetheless the team implemented the foundation of the robotino software which was then refined to implement a full version of the exploration phase in 2017. In Figure \ref{fig:ip2016} the control flow of the instruction as it was the state when the team took over the project can be seen. The first thing the Instruction Planner does is to wait for incoming messages. If a message was received it can usually be two types (either a message from the Referee Box or from one of the other components via the SmartLispServer). If the message was from the RefBoxServer it can be either a Exploration\_INFO message or a GAMESTATE message. In the 2017 implementation only the GAMESTATE message is used because the EXPLORATION\_INFO was discarded. \\
 
-\newpage
+If the message was a CommTCLMessage (i.e. the message was sent by the SmartLispServer) only the MPS\_FOUND message was handled. The algorithm implemented by the 2016 team first checked if the found MPS stations matched some of the probable zones send by the Referee Box. If this was the case than the matched zones are send back to the LispServer for further exploration (i.e. approaching the MPS and start scanning of the AlvarTag). \\
 
-Currently the CommRefbox communication object can be used to transmit the following data: 
+The return of the detected MPS stations to the Referee Box was not implemented in the Instruction Planner but in the SmartAlvarTagDetection component. For this there was a connection established with an TagEventClient in the SmartRefBoxServer and a SmartEventServer in the AlvarTagDetection. Using this path the Instruction Planner hat no information about the behavior of the MPS station. Therefore in a future implementation of the production phase the Instruction Planner has no idea which station to approach when producing a element by a cap station or a ring station. This design was also revoked in the 2017 implementation where the AlvarTagDetection is now connected to the Instruction Planner and AlvarTag information will be handled there. 
+  
+ 
 
-\begin{itemize}
+\subsubsection{Revised design of the SmartRobotinoInstructionPlanner}
+\label{sec:new_design}
 
-\item MessageType
+As described in \ref{sec:inst_overview} the 2016 design of the Instruction Planner had a few flaws which made it not really adequate for the 2017 competition. Therefore the design was cleaned up and a revised version of the Instruction Planner was created. As described in section \ref{sec:previous} the behavior of the exploration phase was implemented in a lot of different components. To narrow this down it was decided that the Instruction Planner is now responsible for the main control of the all components. This means that the whole exploration phase is implemented in the Instruction Planner. All other components have only domain specific functionality, i.e. that the AlvarTagDetection is only responsible for tag detection and not for sending it back to the Referee Box. \\
 
-This describes the message type. This needs to be done because in C++ the type of an object (even if we have polymorphism) can be not be derived. Therefore each message needs a message type. Valid message types are: GAMESTATE, EXPLORATION\_INFO, MACHINE\_INFO, MACHINE\_REPORT, ORDER\_INFO and 
-ROBOT\_INFO. 
-
-\item Gamestate
-
-The gamestate part of the communication object can be used to transmit the current gamestate from the RefBoxServer to the InstructionPlanner. The elements of this submessage is the state, phase and a timestamp. 
-
-\item ExplorationInfo (deprecated)
-
-This was originally intended to transmit a set of zones which can include a MPS station for the team with a high probability. But because of new rules in the 2017 scenario this was dismissed. Therefore this message part is currently out of use. The explorationInfo contains a array of probable zones. 
+The main message processing task is still implemented in the InstructionPlanerTask class. This means that in this class Refbox messages or CommTCLMessage objects can be received or transmitted. 
 
 
-\item machineInfos
-
-The machineInfos message contains a list of six machineInfo which can be used as database for already detected MPS stations. The list of machineInfo begins with mInfo1 and ends with mInfo6.
-
-\item machineInfo
-
-The machineInfo message describes the position of a detected MPSstation with the X-Coordinate the Y-Coordinate and the orientation of the MPS-Station. This is exactly the data the Refereebox expects for a sucessfull detection of the station.
-
-
-\item machineReport
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.25]{pic/InstructionPlannerTask.png}
+\caption{The control flow of the Instruction Planner Task}
+\label{fig:instructionplannertask}
+\end{figure}
+ 
+As it can be seen in figure \ref{fig:instructionplannertask} the control flow of the InstructionPlannerTask is a little bit different than in 2016. If a new message is popped from the queue it is checked whether it is a CommRefBox- or a CommTCLMessage. In case of a CommRefBoxMessage it is checked either the gamestate is checked or the robot\_info. If the evaluation of either one of both is done the control flow jumps back to the start and waits for another incoming message. In case of a CommTCLMessage first the message header is evaluated and according to this information a event is triggered in the state machine which is implemented in the RobotState class. With this step the responsibility is handovered to the state machine and after this the control flow jumps the start and waits for another message. \\ 
 
 
-The machineReport describes general information about the detected MPS stations. The informations which can be transmitted are the name of the MPS station, the zone where the MPS is localized, and the detected light signal. The lightsignal is deprecated in the 2017 scenario. 
 
-\item robotInfo and robotState
-
-These two message containers are used to transmit the current state of the robot as seen from the refbox. The state of the robot can be ACTIVE if everything works normal, MAINTENANCE if the team asked for a maintenance break to fix some issue of the robot or DISQUALIFIED if the robot was put into maintenance the second time or violated some rule of the contest. This message is used for internal monitoring of the contest from the robot site. For example if the robot returns from reconnects to the Referee Box from a maintenance break it can detect whether it can start to drive into the field again.  
+\subsubsection{State machine}
 
 
-\item orderInfo
+Figure \ref{fig:statemachine} shows the statemachine for the exploration phase scenario. This statemachine was implemented inside a class called RobotState. When the robotino software boots up the first state which is entered is the initial state. In this state the robot does nothing except that it waits for a signal by the referee box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into detection state. In the detection state the robot drives around the field and tries to detect MPS stations. The detection will be done by the MPSDocking component. If this component has found a station on the field it reports this back via the LispServer component to the Instruction Planner. If a one or more MPS stations were found the State machine makes a transition to the Approaching state. \\
 
-//todo 
-
-
-\end{itemize}
-
-
-\subsubsection{Statemachine}
-
-
-Figure \ref{fig:statemachine} shows the statemachine for the exploration phase scenario. This statemachine was implemented inside a class called RobotState. When the robotino software boots up the first state which is entered is the initial state. In this state the robot does nothing except that it waits for a signal by the referee box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into detection state. In the detection state the robot drives around the field and tries to detect MPSstations. The detection will be done by the MPSDocking component. If this component has found a station on the field it reports this back via the LispServer component to the InstructionPlanner. If a one or more MPSstations were found the Statemachine makes a transition to the Approaching state. \\
-
-\newpage
 
 \begin{figure}
 \centering
@@ -108,7 +76,7 @@ The State machine contains the following states:
 
 \item INITIAL 
 
-This is the first state the robot will transit into when launching up the robotino software for the robocup competition. In this state the robot makes connection to the Referee Box and registers to the Referee system. After this it waits at the starting position for a signal which indicates that the exploration phase has begun. By receiving this message the robot makes a transition into the DETECTION state.  
+This is the first state the robot will transit into when launching up the robotino software for the Robocup competition. In this state the robot makes connection to the Referee Box and registers to the Referee system. After this it waits at the starting position for a signal which indicates that the exploration phase has begun. By receiving this message the robot makes a transition into the DETECTION state.  
 
 
 \item DETECTION
@@ -131,12 +99,72 @@ If the AlvarTag on the MPS station was detected correctly by the AlvarTagDetecti
 
 \item REPORT\_MPS
 
-In this state the acquired information about the detected MPS stations is gathered together and send to the Referee Box. First the Instruction Planner converts the AlvarTag information from an internal representation into a representation which can be understood by the Referee Box. To archive this the information is packed into a communication object which is then send to the RefboxServer component which it then relays it to the actual Referee Box computer by using the Google Protobuf message protocol.  \\
+In this state the acquired information about the detected MPS stations is gathered together and send to the Referee Box. First the Instruction Planner converts the AlvarTag information from an internal representation into a representation which can be understood by the Referee Box. To archive this the information is packed into a communication object which is then send to the RefboxServer component which it then relays it to the actual Referee Box computer by using the Google Protobuff message protocol.  \\
 
 After the information of the MPS station was transmitted to the Referee Box the Instruction Planner changes the state to the DETECTION state. Then the whole process is started again until the exploration phase is over. 
 
 
 \end{itemize}
+
+
+\subsubsection{Communication Objects Used in The Instruction Planner}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.25]{pic/SmartRobotinoInstructionPlaner.JPG}
+\caption{Model of Instruction Planner}
+\label{fig:i_overview}
+\end{figure}
+
+
+As shown in figure \ref{fig:i_overview} the SmartRobotinoInstructionPlanner has multiple input and output ports which are connected to components such as RefboxServer, MPSDetection or AlvarDetection. This connection is created over the SmartLispServer component using SmartTCL messages. On the other hand connections to the SmartLogisticsRefboxServer are done over communication objects which can be created inside SmartSoft for data like the Phases, Maintenance and so on. For the connection between the Instruction Planner and the Refbox component a communication called CommRefbox is used. This object can be used to send certain data about the detected stations, exploration or production phase and the state of the robotino as seen by the 
+Referee Box. \\
+
+Currently the CommRefbox communication object can be used to transmit the following data: 
+
+\begin{itemize}
+
+\item MessageType
+
+This describes the message type. This needs to be done because in C++ the type of an object (even if we have polymorphism) can be not be derived. Therefore each message needs a message type. Valid message types are: GAMESTATE, EXPLORATION\_INFO, MACHINE\_INFO, MACHINE\_REPORT, ORDER\_INFO and 
+ROBOT\_INFO. 
+
+\item Gamestate
+
+The gamestate part of the communication object can be used to transmit the current gamestate from the RefBoxServer to the Instruction Planner. The elements of this sub-message is the state, phase and a time stamp. 
+
+\item ExplorationInfo (deprecated)
+
+This was originally intended to transmit a set of zones which can include a MPS station for the team with a high probability. But because of new rules in the 2017 scenario this was dismissed. Therefore this message part is currently out of use. The explorationInfo contains a array of probable zones. 
+
+
+\item machineInfos
+
+The machineInfos message contains a list of six machineInfo which can be used as database for already detected MPS stations. The list of machineInfo begins with mInfo1 and ends with mInfo6.
+
+\item machineInfo
+
+The machineInfo message describes the position of a detected MPS station with the X-Coordinate the Y-Coordinate and the orientation of the MPS-Station. This is exactly the data the Referee Box expects for a successful detection of the station.
+
+
+\item machineReport
+
+
+The machineReport describes general information about the detected MPS stations. The information which can be transmitted are the name of the MPS station, the zone where the MPS is localized, and the detected light signal. The lightsignal is deprecated in the 2017 scenario. 
+
+\item robotInfo and robotState
+
+These two message containers are used to transmit the current state of the robot as seen from the Refbox. The state of the robot can be ACTIVE if everything works normal, MAINTENANCE if the team asked for a maintenance break to fix some issue of the robot or DISQUALIFIED if the robot was put into maintenance the second time or violated some rule of the contest. This message is used for internal monitoring of the contest from the robot site. For example if the robot returns from reconnects to the Referee Box from a maintenance break it can detect whether it can start to drive into the field again.  
+
+
+\item orderInfo
+
+//todo 
+
+
+\end{itemize}
+
 
 
 \subsubsection{Advantages and Disadvantages of this design} 
@@ -153,11 +181,11 @@ Usually a logic block in the exploration phase is made out of a pattern:
 
 \begin{enumerate}
 
-\item InstructionPlanner send a message to a component.
+\item Instruction Planner send a message to a component.
 
 \item The component executes some task
 
-\item The InstructionPlanner receives a result if the task was executed sucessfully by the 
+\item The Instruction Planner receives a result if the task was executed successfully by the 
 component or not.  
 
 
@@ -171,9 +199,9 @@ Because the exploration phase is made out of defined rules which the robot needs
 \item Disadvantages
 
 A disadvantage is that the whole state machine needs to be handwritten by the developer because there is no tool included which can generate code out from a visual representation 
-of the state machine. Although this is possible to use a seperated tool, this is not included in smart soft. Therefore if a new logic block is added to the scenario by the rcll comitee this needs to be added by hand to the state machine. This can be a very time exhausting process if the state machine contains a lot of states. Therefore another design pattern might be better here which enables adding new logic blocks in a easier way. \\
+of the state machine. Although this is possible to use a separated tool, this is not included in smart soft. Therefore if a new logic block is added to the scenario by the rcll comitee this needs to be added by hand to the state machine. This can be a very time exhausting process if the state machine contains a lot of states. Therefore another design pattern might be better here which enables adding new logic blocks in a easier way. \\
 
-Also another big disadvantage of this design is that functionallity like this is already implemented inside the SmartSoft framework using the SmartTCL robotics behavior framework.
+Also another big disadvantage of this design is that functionality like this is already implemented inside the SmartSoft framework using the SmartTCL robotics behavior framework.
 This framework enables it to model certain logic blocks of the exploration phase as robotic behaviors like "drive to a position" or "make a picture". The whole exploration phase can modeled using these SmartTCL task blocks. Writing these task blocks can be done using a DSL language which is implemented in Common Lisp. A disadvantage is that this Lisp based DSL is 
 very different from general purpose languages like C++ or Java. But on the other side robotic tasks can be implemented easier. 
 
