@@ -52,10 +52,44 @@ The main message processing task is still implemented in the InstructionPlanerTa
  
 As it can be seen in figure \ref{fig:instructionplannertask} the control flow of the InstructionPlannerTask is a little bit different than in 2016. If a new message is popped from the queue it is checked whether it is a CommRefBox- or a CommTCLMessage. In case of a CommRefBoxMessage it is checked either the gamestate is checked or the robot\_info. If the evaluation of either one of both is done the control flow jumps back to the start and waits for another incoming message. In case of a CommTCLMessage first the message header is evaluated and according to this information a event is triggered in the state machine which is implemented in the RobotState class. With this step the responsibility is handovered to the state machine and after this the control flow jumps the start and waits for another message. \\ 
 
+Table \ref{tab:tcl_state} shows various TCL messages which are send from the components and the events which are then triggered in the state machine: \\
 
+\begin {table}[h]
+\caption{TCL messages and State machine events}
+\label{tab:tcl_state}
+\begin{center}
+
+\begin{tabular}{|l|l|}
+\hline 
+TCLmessage & State machine event \\ 
+\hline 
+MPS\_FOUND & EV\_MPS\_FOUND \\ 
+\hline 
+NO\_MPS\_FOUND & EV\_MPS\_NO\_FOUND \\ 
+\hline 
+GOAL\_REACHED & EV\_GOAL\_REACHED\\ 
+\hline 
+ALVAR\_TAG & EV\_FOUND\_TAG \\ 
+\hline 
+MARKER\_NOT\_DETECTED & EV\_FOUND\_NO\_TAG \\ 
+\hline 
+ALVA\_TAG & EV\_FOUND\_TAG \\ 
+\hline 
+DOCKING\_DONE & EV\_DOCKING\_DONE \\ 
+\hline 
+DOCKING\_NO\_STATION & EV\_DOCKING\_NO\_STATION \\ 
+\hline 
+\end{tabular} 
+\end{center}
+\end {table}
+
+\bigskip
+
+By using this table the algorithm can make a lookup and checks which event should be triggered inside the state machine. This is a basic lookup algorithm and is the implementation of the "Evaluate TCL message" and "Trigger State Machine" path of figure \ref{fig:instructionplannertask}. The state machine which implements the exploration phase can be seen in section \ref{sec:state_machine}. 
+  
 
 \subsubsection{State machine}
-
+\label{sec:state_machine}
 
 Figure \ref{fig:statemachine} shows the statemachine for the exploration phase scenario. This statemachine was implemented inside a class called RobotState. When the robotino software boots up the first state which is entered is the initial state. In this state the robot does nothing except that it waits for a signal by the referee box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into detection state. In the detection state the robot drives around the field and tries to detect MPS stations. The detection will be done by the MPSDocking component. If this component has found a station on the field it reports this back via the LispServer component to the Instruction Planner. If a one or more MPS stations were found the State machine makes a transition to the Approaching state. \\
 
