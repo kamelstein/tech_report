@@ -1,4 +1,4 @@
-\subsubsection{Overview}
+ \subsubsection{Overview}
 
 
 This section is about the SmartAlvarTagDetection Component. The component is used to identify the Alvar Tags on the MPS machines, which is required for the exploration phase where the robots have to explore the game field and find MPS machines and identify the MPS based on their Alvar Tag. \\
@@ -25,7 +25,13 @@ The team from the previous semester already had an implementation of the SmartAl
 \end{figure}
 
 
-Explain Algorithm
+At first, the SmartUnicapImageServer is being activated to take a picture and push an image to the SmartAlvarTagDetection. If the SmartUnicapImageServer is done, the LISP Server starts the SmartAlvarTagDetection Trigger Handler. The first thing the Trigger Handler does, is performing a validity check on the picture, to see if the picture can be used or not. If it is not valid, it returns a message saying that the image is not valid. But if it is valid, the image is converted into a greyscale picure, making it easier to recognize the Alvar Tags. Next, the marker detector has to detect an Alvar Tag on the image. It determines the ID by detecting and scanning the tag. In a lookup table this ID is searched and if there is a tag belonging to the ID, then this marker is returned. Markers consist of the type of station, the side and the team color. If the ID cannot be found an error message is returned, otherwise a positive message is returned. \\
+Bild von Lookup table \\
+
+The main Problem in this approach was the weak error handling. When for instance no ID could be found on the image and therefore the lookup was not possible, then the entire Robotino crashed. Another problem was that there was no proper communication with the SmartRobotinoInstructionPlanner. When the MPS was detected and found in the lookup table, the positive message was directly sent to the RefBoxServer and not to the SmartRobotinoInstructionPlanner. The communication flow was not transparent. \\
+
+Another problem, not with the implementation but rather with the Alvar and OPENCV libraries, was that it only was possible to deploy the SmartAlvarTagDetection on one computer.
+
 
 
 \subsubsection{Current State}
