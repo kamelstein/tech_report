@@ -258,7 +258,49 @@ other team members together.
 
 \subsubsection{Maintenance Modes}
 
-Describe how to team and the robot can react to failures and the system. How to set the robot into maintenance mode and how the robot can return to the game. 
+Another part which was implemented by the 2017 team was the capability of the robot to react on unforeseen software crashes and maintenance during a running phase of the competition. As it is described in the rules (link to rulebook) each team has the option to put a robotino into maintenance mode. This right can be used for example if the software of the robotino has crashed and the robot behaves in the wrong way or not at all. For this purpose the team needs to put out a request on the referee to remove the robot from the field. Then the team has a time constraint of two minutes to restart the robot and put the robot back into the competition. If the robot needs to be put out from the field a second time, the robot will be disqualified. \\
+
+There were no features in the Robotino software for the maintenance phase implemented during the competition. Therefore after the Robocup competition parts of such a feature were implemented. \\
+
+Currently this feature is implemented in the RefboxServer and SmartRobotinoInstructionPlanner component. For signaling that the robot has been put into maintenance mode by the referee team a message called RobotInfo is send from the Referee Box to the Robotino. This message contains a field which is called RobotState and signals the current state in which the robot is assigned. As seen in the Referee Box manual (//link to refbox manual) the robot can be in one out of three state. The states are ACTIVE, MAINTENANCE and DISQUALIFIED. \\
+
+\begin{itemize}
+
+\item ACTIVE
+
+If everything works as normal and the robot has not been disqualified or put into maintenance state, the Referee Box signals that from it's point of view the robot is considered as a active Robotino driving around the field and detecting MPS stations. 
+
+
+\item MAINTENANCE
+
+By broadcasting this state from the Referee Box it is considered that the Robotino has been put off the field and has a problem which is investigating. On the side of the Referee Box a timer of 2 minutes is counting done to put a time constraint on the team for investigating the Robotino. If the timer reaches zero the state of the robot is automatically switched into DISQUALIFIED and the team can not further participate during this round. If the team is signaled that the investigation of the robot has finished within the 2 minute time constraint a referee can put the robot into active mode again. 
+
+\item DISQUALIFIED
+
+This mode is the case if the robot has been put into maintenance mode for a second time in one round, or the team has not made it possible to get the Robotino running again during the first maintenance phase. Then the Robotino is considered disqualified and has no option to participate in the running exploration or production phase of the current round.  
+
+\end{itemize}
+
+To pass on the information of the Robotstate from the Referee Box to the internal structure of the Robotino software the CommRefBox communication object was extended to transmit the RobotState information. \\
+
+
+\newpage
+
+A part which is not implemented at the moment is that the robot has the knowledge of the detected MPS stations before the software crashed or another problem occurred. This can be part which needs to be implemented in the future for the 2018 competition. \\
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.2]{pic/maintenance.png}
+\caption{Control flow after the robot has been put into maintenance mode}
+\label{fig:maintenance}
+\end{figure}
+
+
+Figure \ref{fig:maintenance} shows the control flow after the robot the Robotino software has been restarted after the maintenance phase. Normally if the robot is at the starting position again and it notices that the exploration or production phase is active it will drive towards the field to start exploration. This is not desired when the robot reenters the field after maintenance. Instead the Robotino should wait until a referee switches the maintenance state to the active state. This is done by continuously checking the RobotState until it changes to active. Then the Robotino goes into normal exploration mode and starts exploration the field for MPS stations. \\
+
+
+
 
 
 \subsubsection{Outcome}
