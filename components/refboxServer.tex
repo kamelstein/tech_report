@@ -3,10 +3,13 @@
 
 This component is the interface for the Refbox. It handles the communication between the Refbox and the robotinos. Without this, it is not possible to know the phase of the game and to earn points. \\
 
-This component is the key element for handling the communication between the referee box and the robotinos. Its functionality is very important, since communication to the referee box is essential to receive game instructions and report sensed information to gain points. If you need a full understanding of the communication patterns, it is recommended to read also the referee box manual located at \url{ http://www.robocup-logistics.org/refbox}. It describes the used protobuf messages in a detailed way. In the current state, the component covers most of the use cases needed for the Robocup competition.
+This component is the key element for handling the communication between the referee box and the robotinos. Its functionality is very important, since communication to the referee box is essential to receive game instructions and report sensed information to gain points. If you need a full understanding of the communication patterns, it is recommended to read also the referee box manual located at \url{ http://www.robocup-logistics.org/refbox}. It describes the used protobuf (//link to protobuf) messages in a detailed way. In the current state, the component covers most of the use cases needed for the Robocup competition.
  
 
 \subsubsection{Old situation}
+
+//also 2016 situation \\
+//reference to the technical report from the previous team \\
 
 In the old version of the code, the RefBox Server component was not used to send back informations about detected MPS. So, there was no complete communication with InstructionPlaner and Refbox. There was not Refbox installed in the laboratory. 
 
@@ -16,6 +19,13 @@ In the old version of the code, the RefBox Server component was not used to send
 About the Refbox server component, some new objects need to be handle (new zones, new MPS) that’s why some communication objects have been added. Getting from the Refbox the team color and current game phase is working and tested. Send color and phase to InstructionPlaner component is also working. The detection of the maintenance phase is now possible. Send MPS information like zones, orientation from Refbox server to Refbox is working. The Refbox adds successfully points for good MPS reports and remove points for wrong MPS reports. It is necessary to modify the following parameters: the \textbf{HostIP} which is the IP address of the referee box, the \textbf{Name} which represent the name of the robotino (this name will be listed at the referee box GUI), the \textbf{Number} which is the (jersey) number of the robotino (this number will be listed at the referee box GUI) and the \textbf{Cryptokey} which is the key used for encrypted team channel.\\
 
 \subsubsection{Classes}
+
+//maybe show some graphics here \\
+//deployment or class diagram  \\
+//sequence charts  \\
+//something like this \\
+
+//i used lucidchart.com for diagrams \\
 
 There are several classes in Refbox Server component. Each class will be described here. Reading the source code at the same time is recommended.\\
 
@@ -32,4 +42,6 @@ Finally, the \textbf{PeerCommunication} class is the component’s smartTask of 
 
 \subsubsection{Difficulties}
 
-About the Refbox server, the encryption was different in the competition and in the laboratory. An Electronic Code Book (ECB) was needed in Robocup and Cipher Block Chaining (CBC) is used with the Refbox installed in the laboratory.
+About the Refbox server, the encryption was different in the competition and in the laboratory. An Electronic Code Book (ECB) was needed in Robocup and Cipher Block Chaining (CBC) is used with the Refbox installed in the laboratory. \\
+
+//Maybe improve grammar and spelling ;) 
