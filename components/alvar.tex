@@ -2,9 +2,14 @@
 
 
 This section is about the SmartAlvarTagDetection Component. The component is used to identify the Alvar Tags on the MPS machines, which is required for the exploration phase where the robots have to explore the game field and find MPS machines and identify the MPS based on their Alvar Tag. \\
-
 Each MPS has their own Alvar Tag, one in the front and one in the back of the machine. This is important for the production phase later. On the field there are seven machines for each team. There are four types of MPS Machines, Base station, Cap station, Ring station and Storage station. All together there are 14 machines with 28 Alvar Tags. \\
-Bild von Alvar Tag auf einer MPS. \\
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.75]{pic/numberedMarker.png}
+\caption{Shows an AlvarTag with corresponding ID}
+\label{fig:smartAlvarFlow}
+\end{figure}
 
 The main idea is that the SmartAlvarTagDetection component identifies the tags. To do so, the component uses an algorithm to determine the Alvar Tag. Therefore, the component needs a picture of the Tag which is taken by a webcam mounted on each of the robotinos and operated by the SmartUnicapImageServer. The SmartAlvarTagDetection components is only one out of many components that are operated and instructed by the InstructionPlanner via the Sequencer (LISPServer). \\
 Explain how to operate SmartAlvarTagDetection and SmartUnicapImageServer with DeploymentAlvarTagTest
