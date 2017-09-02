@@ -1,16 +1,12 @@
 
 \subsubsection{Overview}
 
-This component is the interface for the Refbox. It handles the communication between the Refbox and the robotinos. Without this, it is not possible to know the phase of the game and to earn points. \\
-
-This component is the key element for handling the communication between the referee box and the robotinos. Its functionality is very important, since communication to the referee box is essential to receive game instructions and report sensed information to gain points. If you need a full understanding of the communication patterns, it is recommended to read also the referee box manual located at \url{ http://www.robocup-logistics.org/refbox}. It describes the used protobuf (\url{https://developers.google.com/protocol-buffers}) messages in a detailed way. In the current state, the component covers most of the use cases needed for the Robocup competition.
+This component is the interface for the Refbox. It handles the communication between the Refbox and the robotinos. Its functionality is very important, since communication to the referee box is essential to receive game instructions and report sensed information to gain points. If you need a full understanding of the communication patterns, it is recommended to read also the referee box manual located at \url{ http://www.robocup-logistics.org/refbox}. It describes the used protobuf (\url{https://developers.google.com/protocol-buffers}) messages in a detailed way. In the current state, the component covers most of the use cases needed for the Robocup competition.
 
 
 \subsubsection{Situation in 2016}
 
-//reference to the technical report from the previous team \\
-
-In the old version of the code, the RefBox Server component was not used to send back information about detected MPS. So, there was no complete communication with InstructionPlaner and Refbox. There was not Refbox installed in the laboratory. 
+In the old version of the code, the RefBox Server component was not used to send back information about detected MPS \cite{BOK}. So, there was no complete communication with InstructionPlaner and Refbox. There was not Refbox installed in the laboratory. 
 
 
 \subsubsection{Situation in 2017}
@@ -45,9 +41,14 @@ Next the \textbf{ConnectionMaintenance} class has a task which send a beacon sig
 
 Finally, the \textbf{PeerCommunication} class is the component’s smartTask of the SmartSoft environment. This means this is the loop construct which will be run as long as the component is active. At the current state, it does nothing more than sending new registered information about the gamestate or explorationinfo messages to the instruction planner via the push server.\\
 
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\linewidth]{pic/sequence_diagram_RefboxServer.png}
+\caption{Sequence diagram of Refbox server}
+\label{fig:sequenceDiagramRefboxServer}
+\end{figure}
+
 
 \subsubsection{Difficulties}
 
-About the Refbox server, the encryption was different in the competition and in the laboratory. An Electronic Code Book (ECB) was needed in Robocup and Cipher Block Chaining (CBC) is used with the Refbox installed in the laboratory. \\
-
-//Maybe improve grammar and spelling ;) 
+About the Refbox server, the encryption was different in the competition and in the laboratory. An Electronic Code Book (ECB) encryption was needed in Robocup and Cipher Block Chaining (CBC) encryption is used with the Refbox installed in the laboratory. \\
