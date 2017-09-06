@@ -12,7 +12,7 @@ Each MPS has their own Alvar Tag, one in the front and one in the back of the ma
 \end{figure}
 
 The main idea is that the SmartAlvarTagDetection component identifies the tags. To do so, the component uses an algorithm to determine the Alvar Tag. Therefore, the component needs a picture of the Tag which is taken by a webcam mounted on each of the robotinos and operated by the SmartUnicapImageServer. The SmartAlvarTagDetection components is only one out of many components that are operated and instructed by the InstructionPlanner via the Sequencer (LISPServer). \\
-Explain how to operate SmartAlvarTagDetection and SmartUnicapImageServer with DeploymentAlvarTagTest
+
 
 \subsubsection{Previous State}
 
@@ -28,7 +28,11 @@ The team from the previous semester already had an implementation of the SmartAl
 
 At first, the SmartUnicapImageServer is being activated to take a picture and push an image to the SmartAlvarTagDetection. If the SmartUnicapImageServer is done, the LISP Server starts the SmartAlvarTagDetection Trigger Handler. The first thing the Trigger Handler does, is performing a validity check on the picture, to see if the picture can be used or not. If it is not valid, it returns a message saying that the image is not valid. But if it is valid, the image is converted into a greyscale picure, making it easier to recognize the Alvar Tags. Next, the marker detector has to detect an Alvar Tag on the image. It determines the ID by detecting and scanning the tag. In a lookup table this ID is searched and if there is a tag belonging to the ID, then this marker is returned. Markers consist of the type of station, the side and the team color. If the ID cannot be found an error message is returned, otherwise a positive message is returned. \\
 
+\begin {table}[h]
+\caption{ID and MarkerDetectionState of MPS}
+\label{tab:alvar_mps}
 \begin{center}
+
  \begin{tabular}{|c | c|}
  \hline
  ID & MarkerDetectionState \\ [0.5ex] 
@@ -47,6 +51,7 @@ At first, the SmartUnicapImageServer is being activated to take a picture and pu
  \hline
 \end{tabular}
 \end{center}
+\end{table}
 
 The main Problem in this approach was the weak error handling. When for instance no ID could be found on the image and therefore the lookup was not possible, then the entire Robotino crashed. Another problem was that there was no proper communication with the SmartRobotinoInstructionPlanner. When the MPS was detected and found in the lookup table, the positive message was directly sent to the RefBoxServer and not to the SmartRobotinoInstructionPlanner. The communication flow was not transparent. Another problem, not with the implementation but rather with the Alvar and OPENCV libraries, was that it only was possible to deploy the SmartAlvarTagDetection on one computer. Due to difficulties of installing the libraries.
 
@@ -65,14 +70,14 @@ The current version, which was used in the 2017 RoboCup German Open Logistics Le
 
 
 
-The current model consists of a SmartEventServer port, a SmartQueryClient port and a SmartParameterSlave port. The SmartEventServer is connected to the LISP Servers' visualMarkerEventClient, which is used to trigger the SmartAlvarTagDetection Trigger Handler. The other is the SmartQueryClient which is connected to the SmartUnicapImageServers' imageQueryServer to push images that are taken by the webcam to the SmartAlvarTagDetection. A SmartParameterSlave can be used to change the parameters during runtime. The other noticable thing is the SmartComponentParameter, which defines the behavior of the SmartAlvarTagDetection component to a Trigger behavior. The SmartEventTestHandler is used to check whether an event fires accordingly. In this case, it tests whether the correct MarkerDetectionState has been set. MarkerDetectionStates are the detected MPS as states. For instance, the tag with ID = 1 has been detected, then the MarkerDetectionState is set to MARKER CYAN CAP STATION 1 FRONT. \\
+The current model consists of a SmartEventServer port, a SmartQueryClient port and a SmartParameterSlave port. The SmartEventServer is connected to the LISP Servers' visualMarkerEventClient, which is used to trigger the SmartAlvarTagDetection Trigger Handler. The other is the SmartQueryClient which is connected to the SmartUnicapImageServers' imageQueryServer to push images that are taken by the webcam to the SmartAlvarTagDetection. A SmartParameterSlave can be used to change the parameters during runtime. The other noticable thing is the SmartComponentParameter, which defines the behavior of the SmartAlvarTagDetection component to a Trigger behavior. The SmartEventTestHandler is used to check whether an event fires accordingly. In this case, it tests whether the correct MarkerDetectionState has been set. MarkerDetectionStates are the detected MPS as states. For instance, the tag with ID = 1 has been detected, then the MarkerDetectionState is set to MARKER CYAN CAP STATION 1 FRONT. Furthermore, a SmartComponentMetadata has to be added since it stores information about the version of the component\\
 
 The component has been tested in isolation with the later described testdeployment as well as in the masterdeployment. In the 2017 RoboCup German Open Logistics Leauge contest, the SmartAlvarTagDetection component version in the masterdeployment was able to identify, determine and send the correct MPS to the Lisp Server. \\
 The changes to the version of the previous semester include the communication flow with the Lisp Server, sending messages with the correct states, more robust error handling. Handling different cases, when a tag could not be found in the lookup table, when the image is not valid and when there is no Marker on the image. Last year all these cases would have led to a dead lock in the robotino because these cases were not handled. Last semester the communication flow and the integration of the SmartAlvarTagDetection in the masterdeployment was intransparent. This has changed now, the component has a transparent way to communicate with and be triggered by the Lisp Server respectively by the SmartRobotinoInstructionPlanner. Another change was the portation of the Alvar and OPENCV libraries to the Ubuntu 16.04 version as well as the installation of the libraries on the student computers making it possible to deploy and use the SmartAlvarTagDetection on all student computers.
 
 \subsubsection{Testing}
 
-The SmartAlvarTagDetection component has its own test deployment DeployAlvarTest, where only the SmartAlvarTagDetection component is deployed on the Robotino. This is useful for testing and opens the opportunity to increase the robustness of the component. \\
+The SmartAlvarTagDetection component has its own test deployment DeployAlvarTest, where only the SmartAlvarTagDetection component is deployed on the Robotino. This is useful for testing only the SmartAlvarTagDetection component and opens the opportunity to increase the robustness of the component. \\
 
 \begin{figure}[h]
 \centering
