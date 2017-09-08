@@ -1,3 +1,5 @@
+Following section is about the SmartAlvarTagDetection component. It is used for the scanning of the Alvar Tags on the MPS machines. The sections explains how the component works, what the difficulties are and what changes have been made. 
+ 
  \subsubsection{Overview}
 
 
@@ -86,7 +88,7 @@ The SmartAlvarTagDetection component has its own test deployment DeployAlvarTest
 \label{fig:smartAlvarDeploy}
 \end{figure}
 
-The deployment consists of the SmartAlvarTagDetection component with the trigger handler to determine the tag, the SmartUnicapImageServer to provide the webcam picture, the SmartRobotConsole to set parameters of the robotino during runtime, the SmartRobotinoBaseServer to operate the robot and the SmartAlvarTest to see whether the correct event, the correct MarkerDetectionState, has been fired. The SmartRobotConsole is needed to activate and operate the SmartUnicapImageServer to push several images to the SmartAlvarTagDetection. The SmartAlvarTagDetection component needs to be triggered by the SmartRobotConsole, to do so the trigger parameter needs to be set. This can be done by ...\\ TODO \\
+The deployment consists of the SmartAlvarTagDetection component with the trigger handler to determine the tag, the SmartUnicapImageServer to provide the webcam picture, the SmartRobotConsole to set parameters of the robotino during runtime, the SmartRobotinoBaseServer to operate the robot and the SmartAlvarTest to see whether the correct event, the correct MarkerDetectionState, has been fired. The SmartRobotConsole is needed to activate and operate the SmartUnicapImageServer to push several images to the SmartAlvarTagDetection. The SmartAlvarTagDetection component needs to be triggered by the SmartRobotConsole, to do so the trigger parameter needs to be set manually. 
 
 The isolation tests were mostly about testing the detection of tags, in what angle does the robotino has to be towards the MPS and how far away can he be. As a result of the test cases, the angle should not be more than 45 or 120 degree to the orthogonal of the MPS and the farest point possible is about 6 metres away from the MPS. Within these settings the component could determine all tags correctly. Outside these settings, there occured problems that a tag was recognized but determined wrongly. Many times, the alvar tag was interpreted as a different alvar tag because the tags looked similiar and due to resolution of the robotinos' webcams the SmartAlvarTagDetection algorithm interpreted the tag wrong.
 
