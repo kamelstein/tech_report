@@ -1,12 +1,12 @@
 
 \subsubsection{Overview}
 
-The Referee Box (Refbox) is an external component build by Aachen University. This component controls, monitors, and evaluates the game during the Robocup. It communicates with robots of both teams and the MPS, attributes the points and manages the different phases of the game. To get more information, it is recommended to read the referee box manual located at \url{http://www.robocup-logistics.org/refbox}. To set up the Refbox, the file “config.yaml” should be modified. The most important part to change in this file is the IP addresses (cf. next figure). \\
+The Referee Box (Refbox) is an external component build by Aachen University. This component controls, monitors, and evaluates the game during the Robocup. It communicates with robots of both teams and the MPS, attributes the points and manages the different phases of the game. To get more information, it is recommended to read the referee box manual located at \url{http://www.robocup-logistics.org/refbox}. To set up the Refbox, the file “config.yaml” should be modified. The most important part to change in this file is the IP addresses (cf. Figure \ref{fig:configFile1}). \\
 
 \begin{figure}[!h]
 \centering
 \includegraphics[]{pic/config_file_1.png}
-\caption{Ip adresses to modify in config file}
+\caption{IP adresses to modify in the config.yaml file}
 \label{fig:configFile1}
 \end{figure}
 
@@ -19,7 +19,7 @@ It is also needed to define a name for the team and a crypto key. It should be t
 \label{fig:configFile2}
 \end{figure}
 
-To run the Refbox, two programs should be executed in the same time: the main program (llsf-refbox) and the graphical interface (llsf-refbox-shell).
+To run the Refbox, two programs should be executed at the same time: the main program (llsf-refbox) and the graphical interface (llsf-refbox-shell).
 
 \begin{figure}[!h]
 \centering
@@ -30,13 +30,11 @@ To run the Refbox, two programs should be executed in the same time: the main pr
 
 \subsubsection{Situation in 2016}
 
-There was no permanent Refbox installed in the laboratory. Each team was forced to install on a PC in the lab or on his own computer a Refbox with all necessary libraries. \\
-
+There was no permanent Refbox installed in the laboratory. Each team was forced to install the Refbox software with all necessary libraries on a workstation or on his own computer. \\
 
 \subsubsection{Situation in 2017}
 
-During this year, a permanent Refbox with all the necessary libraries for the Robocup 2017 version (tneumann/rcll17) have been installed on an independent laptop. Any person that needs to test situations with the Refbox can take easily the laptop near his computer or access with XTightVncViewer.  To do this, it is necessary to run the server on the laptop with the command “tightvncserver”. Then it is possible to access with the command “xtightvncviewer <<ipAdress>> :1”.  In the current network, the IP address was “172.26.1.112”.
-A window will be open and an access to the Refbox is possible (cf. next figure).\\
+During this year, a permanent Refbox with all the necessary libraries for the Robocup 2017 version (Branch tneumann/rcll17 in the git repository) has been installed on an independent laptop. Any person that needs to test situations with the Refbox can easily take the laptop near his computer or access the laptop via XTightVncViewer. To do this, it is necessary to run the VNC server on the laptop with the command “tightvncserver”. Then it is possible to access with the command “xtightvncviewer <<ipAdress>> :1”.  In the current network, the IP address is bounded to “172.26.1.112”. A window will be open and an access to the Refbox is possible (cf. Figure \ref{fig:xtightvncviewer}).\\
 
 \begin{figure}[!h]
 \centering
@@ -45,9 +43,9 @@ A window will be open and an access to the Refbox is possible (cf. next figure).
 \label{fig:xtightvncviewer}
 \end{figure}
 
-The Refbox changes regularly so it is necessary to update each new stable version of the Refbox. All versions can be found at this link: \url{https://git.fawkesrobotics.org/llsf-refbox.git}. A contact with Tim Niemueller \cite{RCLL2017}, one of the main developers of the Refbox, should be established to know the good (latest) version. \\
+The Refbox software is constantly developed further so it is necessary to update the local Refbox in the lab to the lastest version. All versions can be found in this repository: \url{https://git.fawkesrobotics.org/llsf-refbox.git}. A contact with Tim Niemueller \cite{RC2017}, one of the main developers of the Refbox, should be established to have information about the version used at the competition. \\
 
 
 \subsubsection{Difficulties}
 
-During the Robocup 2017, some difficulties have been faced. First, it is not possible to choose a zone for a MPS with the Refbox. It results that a successful test is more difficult to do in a smaller area. With this problem, we have used only check if the Refbox can detect the MPS report from Robotinos. We were not interested by a correct report. Indeed, there are not MPS in the center of the field with the current generation done by the Refbox. Another problem was to get the last version of the Refbox. Indeed, the current version in the trunk during the Robocup was the Refbox 2016. It was needed to search in the git repository to find the correct version of the Refbox. The last point was that the setting of the network was not easy during the Robocup. The Refbox is only useful during the test. Indeed, the official Refbox is used during the competition. The "test" Refbox should be identical to the official Refbox with the same crypto key to have quick change. \\
+During the Robocup 2017, some difficulties have been faced. First, it is not possible for the team to pre-assign zones where MPS stations are located. This means that testing in the lab is quite hard because only a small part of the field can be mapped to the zafh-lab. Because of this problem it was only tested if the Refbox can detect the MPS report from the Robotinos. It was not tested whether the correct MPS was detected but only if a MPS was detected by the Refbox. Another problem was to get the latest version of the Refbox. At the time of the Robocup the last version of the repository trunk was used in the Robocup 2016. It was required to search through the git repository to find the correct version of the Refbox. This version can be found on the tneumann/rcll17 branch. The last point was that the network setup was not easy during the Robocup. Therefore the team should have a Refbox for testing which has the same setup than the offical Refbox used in the competition. \\
