@@ -3,13 +3,12 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[12pt]{article}
+\documentclass[12pt]{book}
 
 %Font and Language
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb}
-\usepackage{hyperref}
 \RequirePackage{lmodern}
 \RequirePackage[scaled]{helvet}
 \RequirePackage[T1]{fontenc}
@@ -23,8 +22,6 @@
 \RequirePackage[babel]{csquotes}
 \RequirePackage[backend=biber, style=numeric-comp,maxnames=99,maxalphanames=5]{biblatex}
 \usepackage[algo2e]{algorithm2e} 
-
-
 
 
 \addbibresource{mybib.bib}
@@ -63,7 +60,6 @@
 Antoine \textsc{Bretecher} \\% Your name
 Peter \textsc{Franzreb} \\% Your name
 Matthias \textsc{Goetz} \\% Your name
-Florian \textsc{Unger} \\% Your name
 \end{flushleft}
 \end{minipage}
 ~
@@ -106,10 +102,10 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 
 \newpage
 
-
-\begin{abstract}
+\section{Abstract}
+%\begin{abstract}
 	\input{Abstract.tex}
-\end{abstract}
+%\end{abstract}
 
 \section{Introduction}
 	\input{Introduction.tex}
@@ -135,7 +131,7 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 	\input{components/refboxServer.tex}
 	
 \subsection{SmartMPSDockingRobocup}
-	\input{components/docking.tex}
+\textit{This chapter is moved to a separate document due to reasons not the responsibility of the authors.}	
 
 \section{Lessons learned}
     \input{components/lessons-learned.tex}
