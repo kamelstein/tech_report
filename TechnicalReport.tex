@@ -3,7 +3,7 @@
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
 
-\documentclass[12pt]{book}
+\documentclass[12pt]{report}
 
 %Font and Language
 \usepackage[english]{babel}
@@ -13,6 +13,7 @@
 \RequirePackage[scaled]{helvet}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{lettrine} 
+\usepackage{a4wide}
 
 %Grpahics
 \usepackage{graphicx}
@@ -93,50 +94,46 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 \end{titlepage}
 
 \tableofcontents
-
 \listoffigures
-
 \listoftables
-
 %\listofalgorithms
 
-\newpage
 
-\section{Abstract}
-%\begin{abstract}
+%\section{Abstract}
+\begin{abstract}
 	\input{Abstract.tex}
-%\end{abstract}
+\end{abstract}
 
-\section{Introduction}
+\chapter{Introduction}
 	\input{Introduction.tex}
 
-\section{Robocup}
+\chapter{Robocup}
 	\input{Robocup.tex}
 
-\section{Components}
+\chapter{Components}
 
-\subsection{Overview}
+\section{Overview}
 	\input{components/overview.tex}
 	
-\subsection{SmartAlvarTagDetection}
+\section{SmartAlvarTagDetection}
 	\input{components/alvar.tex}
 	
-\subsection{SmartRobotinoInstructionPlanner}
+\section{SmartRobotinoInstructionPlanner}
 	\input{components/instruction.tex}
 
-\subsection{Refbox}
+\section{Refbox}
 	\input{components/refbox.tex}
 
-\subsection{SmartLogisticsRefboxServer}
+\section{SmartLogisticsRefboxServer}
 	\input{components/refboxServer.tex}
 	
-\subsection{SmartMPSDockingRobocup}
+\section{SmartMPSDockingRobocup}
 \textit{This chapter is moved to a separate document due to reasons not the responsibility of the authors.}	
 
-\section{Lessons learned}
+\chapter{Lessons learned}
     \input{components/lessons-learned.tex}
 
-\section{Outcome}
+\chapter{Outcome}
     \input{components/outcome.tex}
 
 \printbibliography
