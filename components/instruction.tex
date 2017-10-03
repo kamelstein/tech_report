@@ -11,14 +11,12 @@ Various features like driving around in the field or detecting MPS stations is i
 
 The SmartRobotinoInstructionPlanner is connected to the RefboxServer component using two SmartSoft ports. One port is for transmitting messages from the Referee Box to the Instruction Planner and the other is for sending information about detected MPS stations back to the Referee Box. For sending information between those two components, special communication objects are used which makes it easier to parse and process those messages. These messages need to be written in a special DSL for communication objects and are later converted to C++ classes. Using these classes those messages can be easily processed within those components \cite{CO}. \\
 
-
-\begin{figure}[h]
+\begin{sidewaysfigure}[p]
 \centering
-\includegraphics[scale=0.25]{pic/SmartRobotinoInstructionPlaner.JPG}
+\includegraphics[scale=0.5]{pic/SmartRobotinoInstructionPlaner.JPG}
 \caption{Model of Instruction Planner}
 \label{fig:i_overview}
-\end{figure}
-
+\end{sidewaysfigure}
 
 Figure \ref{fig:i_overview} shows the SmartSoft model of the Instruction Planner software component. Various message ports can be seen on the outside of the component. These are the communication ports between the Instruction Planner and the RefBoxServer, but also the SmartLispServer. Also two instances of SmartTask can be seen which are used to implement the functionality within that component. The RefboxTask handles all the messages which are send from the RefboxServer component to the Instruction Planner. The InstructionPlannerTask has more importance for the Instruction Planner than the RefboxTask. In this task the whole message processing between the Referee Box and the Robotino and the messages between other components and the Instruction Planner is done. \\
 
