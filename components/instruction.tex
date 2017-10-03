@@ -99,7 +99,8 @@ DOCKING\_NO\_STATION & EV\_DOCKING\_NO\_STATION \\
 \bigskip
 
 Using this table, the algorithm can make a lookup and can check which event should be triggered inside the state machine. This is implemented as a basic lookup algorithm and is the part  which is shown as the "Evaluate TCL message" and "Trigger State Machine" control flow blocks in figure \ref{fig:instructionplannertask}. The design of the state machine which implements the exploration phase can be seen in the next section. 
-  
+
+\newpage  
 
 \subsubsection{State machine}
 \label{sec:state_machine}
@@ -107,13 +108,14 @@ Using this table, the algorithm can make a lookup and can check which event shou
 Figure \ref{fig:statemachine} shows the state machine which implements the exploration phase scenario. The state machine is used when the Robotino has started the SmartSoft software. After this the Robotino waits until the exploration phase begins. This is indicated by making a transition into the initial state. In this state the Robotino waits for a signal from the Referee Box which triggers the EV\_EXPLORATION event. Using this event the robot knows that the exploration phase has begun and the robot can make a transition into the detection state. In the detection state the Robotino is instructed to drive along a predefined path within the field and start detecting MPS stations. The detection is done simultaneously by the MPSDocking component. If this component has detected a station on the field, this is reported back via the SmartLispServer component to the Instruction Planner. By receiving a list of valid MPS stations on the field, the state machine can make a transition to the Approaching state. By using this approach, the whole procedure of detecting and approaching MPS stations can be archieved. This is described in detail below: \\
 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[scale=0.25]{pic/robotino_state_machine.png}
 \caption{The statemachine for the exploration phase scenario}
 \label{fig:statemachine}
 \end{figure}
 
+\newpage
 
 The State machine contains the following states:
 
@@ -126,7 +128,9 @@ This is the first state the robot will make a transition into when launching up 
 
 \item DETECTION
 
-In this state the robot drives around the field by following a predefined set of landmarks on the field. While driving to a landmark the robot simultaneously tries to detect MPS stations by using its LIDAR (Light Detection and Ranging) sensor in the MPSDocking component. In this state the robot has two choices what to do next. As said before the transition between two states is triggered by a message which is received by the SmartRobotinoInstructionPlanner from one of the other components. In case of the DETECTION state this can be either if there was no MPS detected by the MPSDocking component by receiving a message which triggers the EV\_NO\_MPS\_FOUND event. Then the robot remains in the state and tries to get a better detection of the MPS station while driving to the next landmark of the predefined set.  \\
+In this state the robot drives around the field by following a predefined set of landmarks on the field. While driving to a landmark the robot simultaneously tries to detect MPS stations by using its LIDAR (Light Detection and Ranging) sensor in the MPSDocking component. In this state the robot has two choices what to do next. As said before the transition between two states is triggered by a message which is received by the SmartRobotinoInstructionPlanner from one of the other components. \\
+
+The first case happens if there was no MPS detected by the MPSDocking component. This is indicated by receiving a message which triggers the EV\_NO\_MPS\_FOUND event. Then the robot remains in the state and tries to get a better detection of the MPS station while driving to the next landmark of the predefined set.  \\
 
 The other case is if the MPSDocking component has found one or multiple MPS stations. In this case the MPSDocking component sends a message with a list of all MPS stations, their docking points and the orientation to the Instruction Planner. By receiving this message the EV\_MPS\_FOUND event is triggered. This event then induces a transition from the DETECTION to the APPROACHING state. 
 
@@ -241,6 +245,11 @@ To pass on the information of the Robotstate from the Referee Box to the interna
 
 A part which is not implemented at the moment is a mechanism to preserve that the knowledge of a Robotino it had before the crash happened. Therefore, when the Robotino boots up the SmartSoft software after it had been put to maintenance, it has no idea which MPS has already been detected and has already been scanned. This is a feature which needs to be implemented in the future because it is necessary for a successful competition in 2018. Therefore, the next team should lay its focus on this feature. \\
 
+\newpage
+
+
+Figure \ref{fig:maintenance} shows the control flow of the Robotino software after returning from the maintenance phase. Normally, if the robot is at the starting position again and it notices that the exploration or production phase is active, it will drive towards the field to start exploration. This is not desired when the robot reenters the field after maintenance. Instead, the Robotino should wait until a referee switches the maintenance state to the active state. This is done by continuously polling the received RobotState message until it changes to active. Then the Robotino goes into normal exploration mode and starts exploration the field for MPS stations. In this state there is currently no error handling implemented. This means, that the Robotino can wait for a infinite amount of time until the state changes to active. This should be implemented in a better way in the future. For example the Robot should only poll until a timeout is noticed. \\
+
 
 \begin{figure}[h]
 \centering
@@ -249,8 +258,6 @@ A part which is not implemented at the moment is a mechanism to preserve that th
 \label{fig:maintenance}
 \end{figure}
 
-
-Figure \ref{fig:maintenance} shows the control flow of the Robotino software after returning from the maintenance phase. Normally, if the robot is at the starting position again and it notices that the exploration or production phase is active, it will drive towards the field to start exploration. This is not desired when the robot reenters the field after maintenance. Instead, the Robotino should wait until a referee switches the maintenance state to the active state. This is done by continuously checking the RobotState until it changes to active. Then the Robotino goes into normal exploration mode and starts exploration the field for MPS stations. \\
 
 \newpage
 
