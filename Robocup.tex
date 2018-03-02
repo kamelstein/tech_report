@@ -2,9 +2,9 @@
 
 The Robocup Logistic League is a competition to simulate Industry 4.0.  The goal of this contest is to use autonomous robots to fulfill some action by interacting with some industrial stations (MPS). Some constraints are applied like a defined number of MPSs, a defined size of the field, a limited amount of time for each phase of the game. 
 
-\section{Changes in 2017}
+\section{Changes in 2018}
 
-The Smartbots team has participated in the Robocup German Open 2017 Magdeburg, Logistics League from 5. to 7. Mai 2017. Each year a version of the Rulebook is created. This year, it was published one month before the German Open. The first change of the year 2017 was a bigger field (14m x 8m) in comparison to the last year (12m x 6m). There were also more zones and each zone was smaller (1m x 1m) in comparison to last year (2m x 1.5m). The number of MPSs per team increased from 6 to 7 MPS with a new storage station. Before, possible zones with a MPS were sent by the Refbox to each team at the beginning of the exploration phase. In the rules 2017, there is no information sent. It is now necessary to explore the field and search for the 7 MPS and send the information, including the name of the MPS read with the help of the tag, the zone of the MPS and the orientation of MPS back to the Refbox. 
+The Smartbots@Ulm team will participate in the Robocup German Open 2018 in Magdeburg. Like the last two years the team is preparing for the logistic league. The changes in the Rulebook will be small. A new storage station will be  available on the field. More specific information are not available right now, but should be published to the end of February.
 
 \begin{figure}%[tbhp]
 \centering
@@ -13,11 +13,11 @@ The Smartbots team has participated in the Robocup German Open 2017 Magdeburg, L
 \label{fig:frog}
 \end{figure}
 
-\section{Difficulties}
+\section{Lessons Learned of Robocup 2017}
 
-Some difficulties have been faced because the Smartbots team noticed the new rules for the first time at the time of the Robocup. First, it was needed to implement a way to explore the field without previous knowledge about the position due to the change in the Rulebook. To face this, a path has been created with some fixed zones in the instruction planer component. Then, it was necessary to get the zone and the orientation of a detected MPS. This task has not been fulfilled for the Robocup. The last difficulty was to set up the network. There were two configurations, one to test and one to participate in the game.
- 
+In the year 2017 it was not clear how to setup the network for the game phases. The hosts of the Logistic League provides two configurations: one for testing and one for participating in the game. Therefor it is recommended to speak with the hosts at the Robocup to set up the network properly. 
 
-\section{Situation in the Robocup}
+\section{Robocup Logistic League Participation}
 
-To conclude, the team could accomplish some actions. First, only one robot was moving for each match because there was no multi-deployment. To do the exploration phase, the robot was going into some fixed positions (landmarks). There was no detection of the zone and the orientation of a MPS, although the Alvar tag detection was fully working. The production phase was not implemented and the maintenance phase was not handled. The communication between all components (Refbox Server, Instruction planer, Alvar Tag detection and MPS docking) was working and complete. 
+This year it will be possible to play a complete Exploration Phase. The team will participate with one robot, which is able to detect stations, dock to stations and scan their ALVAR-tags. It will send the information back to the Referee Box and get some points. Maybe the team will configure the SmartInstructionPlanner component at the Robocup in a way, that three robots will participate at the game.
+The production phase is not implemented yet, so the team will skip the third game phase.
