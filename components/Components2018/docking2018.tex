@@ -33,6 +33,8 @@ The calculation of the angle between robot and the target MPS station is describ
 
 \paragraph{Calculation of the angle between robot and MPS}
 
+The corners of the target MPS station assemble a vector (e.g. stationVector). The robot has also a direction vector assigned, which is always pointing in the facing direction of the robot (e.g. roboDirectionVector). For the calculation of the angle between those two vectors, the well-known formula of the dot product of the two vectors divided with the length of the both vectors is used. To get always the acute angle of the vectors, the absolute value of the dot product is used. 
+
 \begin{equation}
 \cos(\phi) = \frac{ \vert \overrightarrow{roboDirectionVector} \circ \overrightarrow{stationVector} \vert} { \vert \overrightarrow{roboDirectionVector}  \vert  \cdot \vert \overrightarrow{stationVector}  \vert}
 \end{equation}
@@ -41,7 +43,10 @@ The calculation of the angle between robot and the target MPS station is describ
 \phi = \cos ^{ - 1} \left( \frac{ \vert \overrightarrow{roboDirectionVector} \circ \overrightarrow{stationVector} \vert} { \vert \overrightarrow{roboDirectionVector}  \vert  \cdot \vert \overrightarrow{stationVector}  \vert} \right)
 \end{equation}
 
-test
+This approach only works, if the robot somehow faces the target MPS machine. Thats why the robot turns towards the target MPS station, before calculating the angle (robot - station). 
+
+\paragraph{Optimizations}
+blblabl
 
 
 
