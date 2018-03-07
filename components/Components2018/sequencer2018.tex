@@ -1,9 +1,10 @@
-This section describes the new LispServer or Sequencer component. It is a special component, because the Sequencer is placed on a different coordination level in Smartsoft. The other components (e.g. Detection, Docking) are placed in the Skill Layer of Smartsoft, and the Sequencer is placed in the Sequencing Layer. In the Sequencing Layer, the developer can model different scenarios, and trigger or call the Skill Level components to satisfy a specific or well designed task. 
-For the Robocup 2018, the whole Exploration Phase is modeled in the Sequencer Layer.
+This section describes the new LispServer or Sequencer component. It is a special component, because the Sequencer is placed on a different coordination level in Smartsoft. The other components (e.g. Detection, Docking, ALVAR Detection) are placed in the Skill Layer of Smartsoft, and the Sequencer is placed in the Sequencing Layer. In the Sequencing Layer, the developer can model different scenarios, and trigger or call the Skill Level components to satisfy a specific or well designed task. 
+For the Robocup 2018, the whole Exploration Phase was modeled in the Sequencer Layer.
 
 \subsubsection{Overview}
 \label{sec:sequencer_overview}
 The so called Sequencer is a central building block of Smartsoft and is responsible for assigning decision-spaces to the components on the skill layer(http://www.servicerobotik-ulm.de/drupal/?q=node/86). In the case of the Robocup, it manages the whole sequence of actions of the Exploration Phase (drive to a point in the field, detect stations, dock to stations, take a picture and detect the ALVAR tag, send information back to the instruction planner). This sequence of actions is shown in figure \ref{fig:sequ_overview}.
+The entities in the Sequencer (Approach Location, Detect MPS, Dock MPS, ALVAR TAG) are the different .lisp files, which the Sequencer uses.
 
 \begin{figure}[h]
 \centering
@@ -12,7 +13,6 @@ The so called Sequencer is a central building block of Smartsoft and is responsi
 \label{fig:sequ_overview}
 \end{figure}
 
-By implementing the Exploration Phase ( and also the Production Phase later on) in the Sequencing Layer, the big disadvantage of the Instruction Planner design of the former team is solved. The Instruction Planner of 2017 tried to absorb the functionality of the sequencer of Smartsoft, by implementing a state machine, which represented the Exploration Phase (VERWEIS 2017 REPORT). 
 
 \subsubsection{Procedure of the Exploration Phase}
 
@@ -34,7 +34,7 @@ For every detected MPS, the Sequencer triggers the SmartMPSRobotinoDocking compo
 \item Dock MPS
 
 The SmartMPSRobotinoDocking component tries to dock to the appropriate machine. 
-The Docking component gives feedback, wether the docking was successful or not. By telling the Sequencer \textit{Docking done}, the Alvar Tag Detection component is triggered. This triggering message holds also the angle of the machine, which was calculated in the docking component.
+The Docking component gives feedback, whether the docking was successful or not. By telling the Sequencer \textit{Docking done (e.g. success)}, the Alvar Tag Detection component is triggered. This triggering message holds also the angle of the machine, which was calculated in the docking component.
 
 \item ALVAR Tag Detection
 
@@ -42,3 +42,10 @@ The last part of the chain is the ALVAR Tag Detection. It provides an ALVAR Tag,
 If an ALVAR Tag gets detected, the Sequencer sends back the angle of the station (from the docking component) and the ALVAR Tag information to the Instruction Planner.
 
 \end{itemize}
+
+\subsubsection{Conclusion }
+
+By implementing the Exploration Phase ( and also the Production Phase later on) in the Sequencing Layer, the big disadvantage of the Instruction Planner design of the former team is solved. The Instruction Planner of 2017 tried to absorb the functionality of the Sequencer of Smartsoft, by implementing a state machine, which represented the Exploration Phase (VERWEIS 2017 REPORT ODER KAPITEL INSTRUCTION PLANNER).
+Unfortunately there was not enough time for the team 2018 to implement also the Production Phase in the Sequencer.
+
+
