@@ -12,7 +12,7 @@
 \RequirePackage{lmodern}
 \RequirePackage[scaled]{helvet}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{lettrine} 
+\RequirePackage{lettrine}
 \usepackage{a4wide}
 
 %Grpahics
@@ -22,7 +22,7 @@
 % Bibliography
 \RequirePackage[babel]{csquotes}
 \RequirePackage[backend=biber, style=numeric-comp,maxnames=99,maxalphanames=5]{biblatex}
-\usepackage[algo2e]{algorithm2e} 
+\usepackage[algo2e]{algorithm2e}
 
 %for sideways pictures
 \usepackage{rotating}
@@ -39,7 +39,7 @@
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
 
 \center % Center everything on the page
- 
+
 %----------------------------------------------------------------------------------------
 %	HEADING SECTIONS
 %----------------------------------------------------------------------------------------
@@ -55,7 +55,7 @@
 \HRule \\[0.4cm]
 { \huge \bfseries Technical Report}\\[0.4cm] % Title of your document
 \HRule \\[1.5cm]
- 
+
 %----------------------------------------------------------------------------------------
 %	AUTHOR SECTION
 %----------------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 %----------------------------------------------------------------------------------------
 
 \includegraphics{pic/logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
- 
+
 %----------------------------------------------------------------------------------------
 
 \vfill % Fill the rest of the page with whitespace
@@ -115,31 +115,33 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 \chapter{Robocup}
 	\input{Robocup.tex}
 
+\chapter{Architecture}
+    \input{Architecture.tex}
 \chapter{Components}
 
 \section{Overview}
 	\input{components/Components2018/overview2018.tex}
-	
+
 \section{SmartRobotinoInstructionPlanner}
 	\input{components/Components2018/instruction2018.tex}
 
 \section{LispServer/Sequencer}
 	\input{components/Components2018/sequencer2018.tex}
-	
+
 \section{SmartAlvarTagDetection}
 	\input{components/Components2018/alvar2018.tex}
-	
+
 \section{Refbox}
 \input{components/Components2018/refbox2018.tex}
 
 \section{SmartLogisticsRefboxServer}
 	\input{components/Components2018/refboxServer2018.tex}
-	
+
 
 
 \section{SmartRobotinoDetection}
 	\input{components/Components2018/detection2018.tex}
-	
+
 \section{SmartRobotinoMPSDocking}
 	\input{components/Components2018/docking2018.tex}
 
