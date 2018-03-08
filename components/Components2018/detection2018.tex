@@ -11,7 +11,7 @@ The former team has implemented the SmartMPSDockingRoboCup component.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{pic/SmartMPSDockingRoboCup.jpg}
-\caption{Model of MPS Detection/Docking Component}
+\caption{Model of the old MPS Detection/Docking Component}
 \label{fig:dockingold_overview}
 \end{figure}
 
@@ -26,13 +26,9 @@ Each Skill component should satisfy one specific task. Therefor the new SmartRob
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.4]{pic/SmartMPSDockingRoboCup.jpg}
-\caption{Model of MPS Detection/Docking Component}
-\label{fig:dockingold_overview}
 \includegraphics[scale=0.4]{pic/detectionComponent.png}
-\caption{Model of MPS Detection Component}
+\caption{Model of new MPS Detection Component}
 \label{fig:dockingNew_overview}
->>>>>>> 015ec9cdd353798adb529438a628090223edc998
 \end{figure}
 
 The new detection component consists of one task (e.g. DetectionTask). If this task is triggered, the component commands the robot to perform a 360 degree turn at the current position. Every detected MPS station is sent back to the Sequencer, for further processing. 
