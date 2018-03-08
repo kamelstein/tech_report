@@ -43,10 +43,20 @@ The corners of the target MPS station assemble a vector (e.g. stationVector). Th
 \phi = \cos ^{ - 1} \left( \frac{ \vert \overrightarrow{roboDirectionVector} \circ \overrightarrow{stationVector} \vert} { \vert \overrightarrow{roboDirectionVector}  \vert  \cdot \vert \overrightarrow{stationVector}  \vert} \right)
 \end{equation}
 
+
 This approach only works, if the robot somehow faces the target MPS machine. Thats why the robot turns towards the target MPS station, before calculating the angle (robot - station). 
 
+/// COMMUNICATION OBJECT /////
+
 \paragraph{Optimizations}
-blblabl
+Several optimizations can be done at the Robocup. 
+
+\begin{enumerate}
+\item Increase the speed of turning
+\item Increase the speed of driving towards the center of the MPS station
+\item Introduce a minimal and maximal distance to the MPS station (e.g. 1 meter), to stay in range for the ALVAR Tag detection
+\end{enumerate}
 
 
-
+\subsubsection{Summary}
+The new docking component works very well. The approach is easy to extend and to optimize. It was not possible to reuse the old component smartMPSDockingRobocup, which combined detection with docking. It would have been to time consuming, finding all the bugs in the overcomplicated component. 
