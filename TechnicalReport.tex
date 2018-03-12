@@ -29,7 +29,7 @@
 
 \setlength{\parindent}{0pt}
 
-
+\nocite{*}
 \addbibresource{mybib.bib}
 
 \begin{document}
@@ -100,7 +100,7 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 
 \tableofcontents
 \listoffigures
-\listoftables
+%\listoftables
 %\listofalgorithms
 
 
@@ -118,12 +118,14 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 \chapter{Architecture}
     \input{components/Components2018/architecture2018.tex}
 \chapter{Components}
+	\label{ch:components}
 
 \section{Overview}
 	\input{components/Components2018/overview2018.tex}
 
 \section{SmartRobotinoInstructionPlanner}
 	\input{components/Components2018/instruction2018.tex}
+	\label{ch:SmartRobotinoInstructionPlanner}
 
 \section{LispServer/Sequencer}
 	\input{components/Components2018/sequencer2018.tex}
@@ -138,7 +140,6 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 	\input{components/Components2018/refboxServer2018.tex}
 
 
-
 \section{SmartRobotinoDetection}
 	\input{components/Components2018/detection2018.tex}
 
@@ -146,10 +147,14 @@ Dr. Christian \textsc{Schlegel} % Supervisor's Name
 	\input{components/Components2018/docking2018.tex}
 
 \chapter{Lessons learned}
-    \input{components/lessons-learned.tex}
+    \input{components/Components2018/lessons-learned2018.tex}
 
 \chapter{Outcome}
-    \input{components/outcome.tex}
+    \input{components/Components2018/outcome2018.tex}
+
+\chapter{References}
+    \input{components/Components2018/references.tex}
+
 
 \printbibliography
 

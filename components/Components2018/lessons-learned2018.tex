@@ -1,33 +1,32 @@
 This section describes the facts which all the team members learned through development of the Robocup software. It describes the organization of the 
 project team, what was wrong and what should be done better.
 
-\section{Organization during the semester}
+\section{Organization during the Semester}
  
 \subsection{Project Handover from the previous Team}
 
-When the 2017 team took over the project from the 2016 seniors in autumn 2016, only a single remaining member of the 2016 team was available. This led to the fact that team members who took over a certain component didn't have a point to start. Although there were documentation like the book of knowledge \cite{BOK} and the 2016 tech report available, it was often not trivial to understand the intention of certain implementation details within the components. Therefore, it would be suggested to carry out a smooth project handover. This means that a senior member and a junior member work together for a certain amount of time. After this time, the junior member should understand the code and can implement some simple components by himself. \\
+When the team of 2018 took over the project from the 2017 seniors, Peter Franzreb, a former senior student of 2017 was available to answer questions and give detailed information about certain components. This was very helpful and is a must for upcoming handovers. \\
 
-This was not the case in the 2016 to 2017 handover, so a lot of time was wasted due to reverse engineering and understanding certain components by the team members. 
+Each junior should not just look ahead shoulders and follow the implementations passively. They have to be actively integrated during the complete project phase. Therefor they need a own computer with the correct setup. \\
+
+In the RoboCup project, lots of different repositories and versions are available and it is not clear, which is the right one to work with. Therefor every team should clean up their workspace for new members, which will continue at their workplace. \\
+
+ Although there were documentation like the book of knowledge \cite{BOK} and the 2017 tech report available, it happened that some ideas or approaches were misunderstood from the new team members. Therefor a little introduction from the experienced staff of the laboratory is very important (regarding Sequencer, general architecture of SmartSoft, etc.). SmartSoft is a complex software and not easy to start with.\\
+ 
+ Before the team gets to frustrated because of the complexity or just the not working tasks, it is highly recommended to ask the laboratory staff. There is not much time available between the Robocups to spend to much time (one or two weeks) on different kinds of issues.
  
 \subsection{Meetings and assignments}
- 
-A software project should have regular meetings to make sure each member has the correct overview what he has to do within the project. At the beginning of the project, the junior team met with the last remaining senior member of the 2016 team to assign components to each new junior member. After this each member worked mostly by himself. This led to the fact that sometimes interfaces where not really clear between components which were developed by two independent members. After the arrival of new junior members in march 2017, a new meeting strategy was followed. On each Wednesday which was the working day for the Robocup team, a small meeting was scheduled in the morning before the team started to work on the project. This resulted in the situation that every team member had an overview of what all other team members were doing. Following this strategy faster progress could be made than within the first semester. Also tasks and deadlines (i.e. scrum sprints) were assigned to the team members. Although sometimes those tasks were not reached within a certain sprint, the overall performance improved.
 
+The team 2018 followed are sort of lightweight Scrum philosophy. Every working day (e.g. every Wednesday) a small meeting was scheduled. Therefor every member had an overview of what the other members are doing or working on. The team of 2018 consisted of three members, which would have been easy to handle without such meetings. But if the amount of team members increases, it is highly recommended to work in some agile environment with fix deadlines.
 
 \subsection{Testing}
 
-Testing is an important thing which should not be neglected. The team tested the scenario in the lab but not with really great success. This was due to the fact that there were certain bugs within the components which often led to a stop of the integration testing until those bugs were fixed. Because of these issues, the team did not manage to have a complete running exploration phase before the Robocup. Also small remaining time prevented detailed testing before the Robocup. To avoid this in the future, teams should assign testing at least the same priority as development. Also if the whole exploration phase (or production phase in the future) can not be tested from the beginning, small tests between components should be made. This should lead to a more robust software and less time rush before the Robocup. \\
-
-So the testing and bug-fixing was done mostly at the Robocup competition. It is the norm and very bad practice that the teams test and improve their software at the Robocup competition but the major testing and development should be done beforehand. 
+Testing was always integrated in the development process. The team tested the several components in isolation, and after they worked properly they got integrated and tested in the whole deployment. Thereby robust scenarios in the laboratory could be implemented, which should also work at the Robocup environment.
 
  
 \section{Organization for the competition}
- 
-As said before the team should have a running scenario when it arrives at the Robocup. This leads to a more relaxed competition and the team can concentrate on making small improvements to the software to perform well on the competition. It should be obvious that the rules of the annual Robocup change each year. Unfortunately, this was not really taken into account by the 2017 team. So the team was unprepared to new changes in the 2017 Magdeburg competition. To battle this issue certain changes were made to the Instruction Planner at the Robocup.  \\
 
-To get around this issue the future team should study the Robocup Logistics League announcement so that adaptions to the new rules in the scenario can be made beforehand. A flexible software architecture may be a good idea so that new changes can be adapted quickly. There exists a mailing list of the Referee Box software which should be followed by the team so that always the newest version is used for development. \\
+At the Robocup 2018 the team has a running scenario available, which will lead to a relaxed competition. The team can make small improvements to the software during the competition, but it is not necessary to implement or reimplement new components. 
 
-Also the team should fully understand the software it operates on the Robotino. There should be a team member who at least is an expert in one component. This means that the team can fix issues with their components independently from the lab team in the university. \\
- 
-At least one person of the team should act as a bridge between the Robocup staff and the team. This person should also be responsible for hotel booking and renting cars within a certain time range before the Robocup. By following these rules, the team should not have any issues with arriving and staying in Magdeburg. This team manager role relieves other team members from organizational stuff and they can focus on development and testing of the software.     
+The team manager role is important. The team manager is responsible for renting cars and hotel booking. He act as bridge between the Robocup staff and the team. By doing so, the other team members can focus on development and testing of the software.
  

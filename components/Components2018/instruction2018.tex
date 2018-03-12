@@ -1,18 +1,16 @@
 
 
-\subsection{Overview}
-The instruction planner is placed at the top layer of the whole SmartSoft architecture,
-therefore it is meant to be the "Swarm Manager" of all Robots that work on a common Task. \\
-This approach has been split up into two different aspects, one part of the Instruction planner has to
-observe all robots and the states that they are currently in, as well as the task that they are working on.
-While the other part of the Instruction planner needs to keep up with the progress on the objective, to
-predict and estimate the proximate steps to the goal.
+\subsubsection{Overview}
+The Instruction Planner is placed at the top layer of the whole SmartSoft architecture,
+therefore it is meant to be the "Swarm Manager" of all robots that work on a common task. \\
+This approach is split up into two different aspects, one part of the Instruction Planner has to
+observe all robots and the states they are currently in, as well as the actual task that they are working on.
 
-\subsection{Idea}
+\subsubsection{Idea}
 
-The following Picture \ref{fig:instr_overview} shows the internal structure of the
-instruction planner.
-As seen in the Picture the instruction planner will do multiple things: \newpage
+The following picture \ref{fig:instr_overview} shows the internal structure of the
+Instruction Planner.
+As seen in the figure the Instruction Planner will do multiple things: \newpage
 In Blue:\\
 \begin{itemize}
     \item \textbf{Game Management:}  organization of next steps
@@ -44,11 +42,9 @@ In Blue:\\
 \end{figure}
 \newpage
 
-Since the Blue-part of figure \ref{fig:instr_overview} handles the internal management
-it can be treated at as an agent that provides the next orders for the robots, based
-on their actual situation.\\
-This situation is brought into the instruction planner via the Sequencers of each
-robot.
+Since the blue-part of figure \ref{fig:instr_overview} handles the internal management, it can be treated as an agent that provides the next orders for the robots, based on their actual situation.\\
+This situation is brought into the Instruction Planner via the Sequencers of each
+robot.\\
 In Green: \\
 \begin{itemize}
     \item \textbf{Sequencers}
@@ -64,64 +60,57 @@ In Green: \\
 \end{itemize}
 
 
-\subsubsection{Objective Management}
-The objective management consists of multiple \textit{state machine}, that are in
+\paragraph{Objective Management}
+The objective management consists of multiple \textit{state machines}, that are in
 a hierarchical order.
-All state machines listen to the events that are received via the \textit{sequencers}, or
-the \textit{refbox}.
+All state machines listen to the events that are received via the \textit{Sequencers}, or
+the \textit{Refbox}.
 The thought behind this architecture is an intelligent agent that can be "asked" for the next
 best step to take.\\
 
-The game state machine is a first level state machine that takes care of the current
-game phase, (e.g. exploration phase, production phase, pause, etc. ). depending on the phase the
-events are then forwarded to the next level state machines, such as the exploration state machine. \\
-\\
-The exploration state machine takes then care of all objectives that have to be fulfilled in the
-exploration phase.
-\subsubsection{Fleet Management}
+\begin{itemize}
+    \item \textbf{Game State Machine}
+    \begin{itemize}
+        \item first level state machine
+        \item takes care of the game phases (e.g. Setup Phase, Exploration Phase, Production Phase)
+         \item depending on the game state, events are forwarded to the next level state machine (e.g. Exploration State Machine)
+    \end{itemize}
+    \item \textbf{Exploration State Machine}
+    \begin{itemize}
+        \item takes care of all objectives that have to be fulfilled in the phase
+        \item tells Sequencer, which position should be explored next
+    \end{itemize}
+\end{itemize}
 
 
-The
-
-\subsection{Changes}
-Previously the purpose of the instruction planner was misunderstood, so the whole structure of
+\subsubsection{Changes}
+Previously the purpose of the Instruction Planner was misunderstood, so the whole structure of
 this component had to be planned again. \\
 The implementation now differs a lot from the old of 2017. Only view lines of code could be recycled and used again.
 A completely new system has been introduced: the \textit{hierarchical state machines}. The implementation of
 this system now is more modular, parts (e.g. the state machines for the phases) can easily be exchanged and
 replaced with other approaches or implementations. \\
-Also new is the split of tasks into \textit{Fleet Management} and \textit{Objective Management}. This
-allows the system to be even more flexible, since commendation of the robot is now isolated from the Task that the
-Swarm should perform. \\
-\\
 Overall the instruction planner has been completely redesigned and is still under construction.
-The basic ideas are implemented but still need to be filled with "live".
 
-\subsection{Conclusion}
-With the new architecture of the instruction planner multiple new features can be implemented.
+
+\subsubsection{Conclusion}
+With the new architecture of the Instruction Planner multiple new features can be implemented.
 \begin{itemize}
     \item \textbf{Multiple Robots} The new implementation would allow the use of multiple robots on the field, since
-    the new architecture considers the use of multiple sequencers.
+    the new architecture considers the use of multiple Sequencers.
     \item \textbf{Intelligent Agents} The \textit{Objective Management} is designed to work with agents that can be asked
     for the next steps, in the actual case the implementation works with state machines. Other implementations of Agents can
     also be fit into the interface.
     \item \textbf{divide et impera} Separating the robot management form the objective management separates two problems
     that can be handled individually: \textit{Objective Manager} creates the next task and the \textit{Fleet Manager} takes care
-    of all robots and assigns this task to the best candidate.
+    of all robots and assigns this task to the best candidate. For the Fleet Manager a complete concept is needed, which is not part of this report.
 \end{itemize}
 
-The actual level of Production does not contain a fully functional instruction planner.
+The actual level of production does not contain a fully functional Instruction Planner.
 The current state consists of the skeleton of the parts, the implementation of the
-actual agent is missing as well as the logic to distribute the tasks to multiple Robots.
-The Architectural changes allow to start the work on any part of the system since the would not affect each other,
-while still just some implementation is necessary for the whole code to work.
+actual agent is missing as well as the logic to distribute the tasks to multiple robots.
 Probably the first implementations of the \textit{Objective Manager} might be a
 simple static implementation of a point pattern to follow, as well as a simple \textit{Fleet Manager} that
-assigns just one order at a time to only onre Robot.
-
-
-\subsection{Testing}
-The instruction planner is still under construction and therefore untested.
-Especially the use of Multiple Robotinos could not be tested and is not planned to take action in the upcoming contest.
+assigns just one order at a time to only one robot.
 
 \newpage
