@@ -1,8 +1,9 @@
-The component SmartLogisticsRefboxServer has not changed during the implementation process. Therefor this chapter also just summarizes the functionality of the component and it is again recommended to read the Technical Report of 2017 for more specific information.
+The component SmartLogisticsRefboxServer has only been modified to also send the rotation of a MPS during the implementation process.
+Therefore this chapter also just summarizes the functionality of the component and it is again recommended to read the Technical Report of 2017 for more specific information.
 
 \subsubsection{Overview}
 
-The component handles the communication between the physical Refbox and the robots. The Refbox uses Google Protocol-Buffers for message serialization. Therefor a component is introduced to act as an interface between the physical Refbox and the robots on the field. The task of the component is to receive Google Protocol-Buffers messages from the Refbox and map them into TCL-messages of Smartsoft. Then it sends the TCL-message to the InstructionPlanner for further processing. 
+The component handles the communication between the physical Refbox and the robots. The Refbox uses Google Protocol-Buffers for message serialization. Therefor a component is introduced to act as an interface between the physical Refbox and the robots on the field. The task of the component is to receive Google Protocol-Buffers messages from the Refbox and map them into TCL-messages of Smartsoft. Then it sends the TCL-message to the InstructionPlanner for further processing.
 
 \begin{figure}[!h]
 \centering

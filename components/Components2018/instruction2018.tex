@@ -81,17 +81,29 @@ best step to take.\\
         \item tells Sequencer, which position should be explored next
     \end{itemize}
 \end{itemize}
-
+\newpage
 
 \subsubsection{Changes}
-Previously the purpose of the Instruction Planner was misunderstood, so the whole structure of
-this component had to be planned again. \\
+The previous implementation of the instruction planner as been changed completely to enhance the modularity.
+The now given Skeleton is designed to be easily extended in various ways, e.g. for the use of multiple Robots
+or the exchange of tactics using different implementation of agents. \\
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{pic/oldUse_Instructionplanner.png}
+\caption{design related changes in Instruction Planner and Sequencer}
+\label{fig:changes_instruction}
+\end{figure}
+
+The new version of the Instruction Planner does no longer work against the Smartsoft architecture\ref{fig:changes_instruction}.
+By changing the architecture as seen in the figure the complexity of the Instruction planner is reduced and the task distribution improved.\\
+
 The implementation now differs a lot from the old of 2017. Only view lines of code could be recycled and used again.
 A completely new system has been introduced: the \textit{hierarchical state machines}. The implementation of
 this system now is more modular, parts (e.g. the state machines for the phases) can easily be exchanged and
 replaced with other approaches or implementations. \\
 Overall the instruction planner has been completely redesigned and is still under construction.
-
+\newpage
 
 \subsubsection{Conclusion}
 With the new architecture of the Instruction Planner multiple new features can be implemented.

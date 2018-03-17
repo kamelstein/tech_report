@@ -3,10 +3,10 @@ Sections. A general overview of how components work together with the Sequencer 
 As well as the placement of the code (which machine runs which part of the software and also how are they connected).
 
 \section{SmartSoft}
-Before the architecture of the Robocup project gets discussed, the SmartsSoft approach is explained in a very brief way. Detailed information about SmartSoft can be found at their homepage \url{http://www.servicerobotik-ulm.de/}.  
+Before the architecture of the Robocup project gets discussed, the SmartsSoft approach is explained in a very brief way. Detailed information about SmartSoft can be found at their homepage \url{http://www.servicerobotik-ulm.de/}.
 \\
 SmartSoft is a model-driven software development approach (MDSD) in the service robotic systems. It has a strict layer architecture, which divides the implementation process in different pieces, like component development, application building and the end user, which combines via predefined communication patterns distributed components to complex scenarios.
-The coordination and implementation of the tasks is subjected by the coordination layers of SmartSoft, which are displayed in the figure \ref{fig:architecture_smartsoft_layers}. 
+The coordination and implementation of the tasks is represented by the coordination layers of SmartSoft, which are displayed in the figure \ref{fig:architecture_smartsoft_layers}.
 
 \begin{figure}[h]
 \centering
@@ -61,7 +61,7 @@ Based on actual sensor values and information delegated by the Sequencer, compon
 \subsection{Deployments}
 \label{subsec:Deployments}
 Deployments are the connection of all needed components.
-A Deployment mostly consists of a map (model driven - code is generated) that describes the connections between all components. 
+A Deployment mostly consists of a map (model driven - code is generated) that describes the connections between all components.
 A deployment runs a scenario on a robot (e.g. Robocup - Exploration Phase).
 
 \section{Robocup specific}
@@ -83,8 +83,16 @@ The Robotino runs on a Ubuntu 16.04 LTS and can be accessed via VNC / HTTP / SSH
 The Robotino is the basis platform that every participant of the RoboCup has to work with.\\
 In the contest all Robotinos will be connected to the Refbox and listen for its signals to start the given phases.
 The rest of the communication will be performed in a team channel where the Robotinos can exchange messages to each other.
+\newpage
 
 \subsection{Referee Box}
 The Refbox is the master of the game, and is controlled by a human referee. It takes care of the game progress, as well as the awarding of points and the disqualification of robots.
-The Refbox also works event based, so it is bursting out events of the game state (e.g. start / stop or game phases) and receives the messages of the robots to score their points.
+The Refbox also works event based, so it is bursting out events of the game state (e.g. start / stop or game phases) and receives the messages of the robots to score their points\ref{fig:struct_wRefBox}.
 It is also always in contact with all of the robots to ensure that they obey the rules.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.23]{pic/struckture_wRefbo.png}
+\caption{Complete System setup of the actually used Robotino}
+\label{fig:struct_wRefBox}
+\end{figure}
