@@ -1,10 +1,10 @@
-This section describes the new LispServer or Sequencer component. It is a special component, because the Sequencer is placed on a different coordination level in SmartSoft. The other components (e.g. Detection, Docking, ALVAR Detection) are placed in the Skill Layer of SmartSoft, and the Sequencer is placed in the Sequencing Layer. In the Sequencing Layer, the developer can model different scenarios, and trigger or call the Skill Level components to satisfy a specific or well designed task.
-For the Robocup 2018, the whole Exploration Phase was modeled in the Sequencing Layer.
+This section describes the LispServer or Sequencer component. It plays a special role in a robot's architecture as it coordinates the skill level components. The other components (e.g. Detection, Docking, ALVAR Detection) are placed in the Skill Layer of a robot's architecture, and the Sequencer is placed in the Sequencing Layer. In the Sequencing Layer, the developer can model different scenarios, and trigger or call the Skill Level components to satisfy a specific and well designed task.
+For the RoboCup 2018, the whole Exploration Phase is now modeled in the Sequencing Layer.
 
 \subsubsection{Overview}
 \label{sec:sequencer_overview}
-The so called Sequencer is a central building block of SmartSoft and is responsible for assigning decision-spaces to the components on the skill layer \cite{SmartSoftManual}. In the case of the RoboCup, it manages the sequence of actions for Exploration Phase (drive to a point in the field, detect stations, dock to stations, take a picture and detect the ALVAR tag, send information back to the instruction planner). This sequence of actions is shown in figure \ref{fig:sequ_overview}.
-The entities in the Sequencer (Approach Location, Detect MPS, Dock MPS, ALVAR TAG) are the different .lisp files, which the Sequencer executes.
+The so called Sequencer is a central building block of SmartSoft and is responsible for assigning decision-spaces to the components on the skill layer \cite{SSM}. In the case of the RoboCup, it manages the sequence of actions for Exploration Phase (drive to a point in the field, detect stations, dock to stations, take a picture and detect the ALVAR tag, send information back to the instruction planner). This sequence of actions is shown in figure \ref{fig:sequ_overview}.
+The entities in the Sequencer (Approach Location, Detect MPS, Dock MPS, ALVAR TAG) are the different .lisp files, which the Sequencer executes. With SmartTCL the behavior of the robot in the Exploration Phase is modeled. Therefore different tasks (e.g. Approach Location, Detect MPS, etc.) are refined, until the level of detail is reached to configure and coordinate the concrete software components (e.g. dock to a detected MPS station).
 
 \begin{figure}[h]
 \centering
@@ -26,11 +26,11 @@ The InstructionPlanner starts the Exploration Phase in the Sequencer by calling 
 
 \item Detect MPS
 
-After reaching the position, the robot will perform the detection of the MPS stations. The sequencer triggers the component SmartRobotinoDetection.
-All detected MPS station are sent back to the Sequencer, in form of a list of the detected MPS stations.
+After reaching the position, the robot performs the detection of the MPS stations. The Sequencer triggers the component \textit{SmartRobotinoDetection}.
+Each detected MPS station is sent back to the Sequencer, which manages a list of the detected MPS stations.
 The Sequencer sends the amount of detected MPS stations, as well as their positions, back to the InstructionPlanner.
-This is necessary for the Instruction Planner to know the number of results to wait for before sending a new \textit{ExplorePosition()} command.
-For every detected MPS, the Sequencer triggers the SmartMPSRobotinoDocking component, which will lead to the detection of the MPS.
+This is necessary, because the Instruction Planner needs to know, for how much results it is waiting for, before a new  \textit{ExplorePosition()} command is sent.
+For every detected MPS, the Sequencer triggers the \textit{SmartMPSRobotinoDocking} component.
 
 \item Dock MPS
 
@@ -46,5 +46,5 @@ If an ALVAR Tag gets detected, the Sequencer sends back the angle of the station
 
 \subsubsection{Conclusion }
 
-By implementing the Exploration Phase (and also the Production Phase later on) in the Sequencing Layer, the former disadvantage of high complexity in the Instruction Planner design could be resolved. The Instruction Planner of 2017 tried to absorb the functionality of the Sequencer of SmartSoft, by implementing a state machine, which represented the Exploration Phase completely (detection, docking, ALVAR tag detection) (\ref{ch:SmartRobotinoInstructionPlanner}).
-The new Instruction Planer is now ready to be used in the Exploration Phase. 
+By implementing the Exploration Phase (and also the Production Phase later on) in the Sequencing Layer, the former disadvantage of high complexity in the Instruction Planner design could be resolved. The Instruction Planner of 2017 tried to absorb the functionality of the Sequencer of SmartSoft, by implementing a state machine, which represented the Exploration Phase completely (detection, docking, ALVAR tag detection).
+Unfortunately, there was not enough time for the team 2018 to implement also the Production Phase in the Sequencer.
