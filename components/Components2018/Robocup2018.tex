@@ -1,6 +1,6 @@
 \section{Overview}
 
-The Logistic League of the Robocup is a relative new league. The topic of the Robocup Logistics is the upcoming Industry 4.0. Two teams are participating in each game, which consists of three phases: Setup Phase, Exploration Phase and Production Phase. Every team is allowed to participate with up to three robots, which have to satisfy the tasks of the league autonomously. There are 14 so called MPS stations on the field. So each team has seven machines assigned. The robots have to interact with those machines in the Exploration Phase and in the Production Phase.
+The Logistic Leagues of the Robocup is a relative new league. The topic of this Robocup league is the upcoming Industry 4.0. Two teams are participating in each game, which consists of three phases: Setup Phase, Exploration Phase and Production Phase. Every team is allowed to participate with up to three robots, which have to fulfill the tasks of the league autonomously. There are 14 so called MPS stations on the field. So each team has seven machines assigned. The robots have to interact with those machines in the Exploration Phase and in the Production Phase.
 
 \begin{figure}%[tbhp]
 \centering
@@ -9,30 +9,28 @@ The Logistic League of the Robocup is a relative new league. The topic of the Ro
 \label{fig:frog}
 \end{figure}
 
-The following describes the three phases of the league shortly. For detailed information the actual Rulebook  \cite{RC17} of the league is recommended.
+The following shortly describes the three phases of the league. For detailed information, the actual Rulebook  \cite{RC17} of the league is a must.
 
-\paragraph{Setup Phase}
-The Setup Phase lasts five minutes. The team has time to setup their robots for the Exploration Phase and the Production Phase. After the five minutes the Referee Box will start the next phase autonomously.
+\paragraph{Setup Phase:}
+The Setup Phase lasts five minutes. The team has time to setup their robots for the Exploration Phase and the Production Phase. After the five minutes the Referee Box will start the next phase automatically.
 
-\paragraph{Exploration Phase}
-The Exploration Phase is the second phase in the Robocup Logistics League. The robots have three minutes to roam the field and find their seven MPS stations. They have to report each station the the Referee Box. The report contains the machine name (encoded in the ALVAR Tag), the zone where the machine is located, and the orientation of the machine in degrees. After the three minutes the Referee Box will start the Production Phase.
+\paragraph{Exploration Phase:}
+The Exploration Phase is the second phase in the Robocup Logistics League. The robots have three minutes to explore the field and find their seven MPS stations. They have to report each station to the Referee Box. The report contains the machine name (encoded in the ALVAR Tag), the zone where the machine is located, and the orientation of the machine in degrees. After the three minutes, the Referee Box starts the Production Phase.
 
-\paragraph{Production Phase}
-The Production Phase is the main game phase of the Logistic League. It lasts 17 minutes and is quite complex. The Referee Box publishes information which includes machine zones and orientations, also colors of ring and cap stations. Those information are needed to play the Production Phase. The Referee Box then orders products, which are assembled by the MPS stations. The robots have to bring the pieces of the ordered product to the production machines and deliver it finally to a Delivery Station.
+\paragraph{Production Phase:}
+The Production Phase is the main game phase of the Logistics League. It lasts 17 minutes and is quite complex. The Referee Box publishes information which includes machine zones and orientations, also colors of ring and cap stations. That information is needed to play the Production Phase. The Referee Box then orders products, which are assembled by the MPS stations. The robots have to bring the pieces of the ordered product to the production machines and deliver it finally to a Delivery Station.
 
 
 \section{Changes in 2018}
 
-The Smartbots@Ulm team will participate in the Robocup German Open 2018 in Magdeburg. Like the last two years, the team is preparing for the Logistic League. The changes in the Rulebook will be small. A new storage station will be available on the field. More specific information are not available right now, but should be published to the end of February at \url{http://www.robocup-logistics.org/rules}.
+The Smartbots@Ulm team will participate in the Robocup German Open 2018 in Magdeburg. Like the last two years, the team is preparing for the Logistics League. The changes in the Rulebook are expected to be small. A new storage station will be available on the field. More specific information is not available right now, but should be published in time for the Magdeburg event at \url{http://www.robocup-logistics.org/rules}.
 
 
 \section{Lessons Learned of Robocup 2017}
 
-In the year 2017 it was not clear how to setup the network for the game phases. The hosts of the Logistic League provides two configurations: one for testing and one for participating in the game. Therefore it is recommended to speak with the hosts at the Robocup to set up the network properly.
+In the year 2017 it was not clear how to setup the network for the game phases. The hosts of the Logistics League provide two configurations: one for testing and one for participating in the game. For that it is recommended to speak with the hosts at the Robocup to set up the network properly.
 
 
-\section{Robocup Logistic League Participation}
+\section{Robocup Logistics League Participation}
 
-This year it will be possible to play a complete Exploration Phase. The team will participate with one robot, which is able to detect stations, dock to stations and scan their ALVAR-tags. It will send the information back to the Referee Box and get some points.
-The next steps could include the use of multiple Robots in the field based on the SmartRobotinoInstructionplanner, or the implementation of smart agents for the Exploratoin phase. \\
-The Production phase is yet not implemented but is also not of priority for the upcoming robocup event. The focus should be on a fully operational Exploration phase.
+This year it will be possible to play a complete Exploration Phase. The team will participate with one robot, which is able to detect stations, dock to stations and scan their ALVAR-tags. It will send the information back to the Referee Box and to finally earn points. Maybe the team will configure the SmartInstructionPlanner component at the Robocup in a way, that three robots participate at the game. The Production Phase is not implemented yet, so the team plans to skip the third phase.
