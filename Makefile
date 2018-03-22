@@ -1,6 +1,6 @@
 all:
 	pdflatex -output-directory build TechnicalReport.tex 
-#	bibtex build/TechnicalReport.aux	doesn't work and is yet not needed
+#	bibtex build/TechnicalReport.aux
 	pdflatex -output-directory build TechnicalReport.tex 
 open:	
 	evince build/TechnicalReport.pdf
