@@ -1,12 +1,12 @@
-The detection of the MPS stations is an important part at the competition. This chapter gives detailed insights of the new implemented SmartRobotinoDetection component. 
+The detection of the MPS stations is an important part at the competition. This chapter gives detailed insights into the newly implemented SmartRobotinoDetection component. 
 
 
 \subsubsection{Overview}
 
-The SmartRobotinoDetection component has only one task: it should detect the MPS stations near by the robot on the field. Therefor, if the component gets triggered, it commands the robot to perform a 360 degree turn and detect all the machines around.
+The SmartRobotinoDetection component has only one task: it shall detect the MPS stations nearby the robot on the field. Therefore, if the component gets triggered, it commands the robot to perform a 360 degree turn and detect all the machines around.
 
 \subsubsection{Old Version 2017}
-The former team has implemented the SmartMPSDockingRoboCup component. 
+The former team implemented the SmartMPSDockingRoboCup component. 
 
 \begin{figure}[h]
 \centering
@@ -16,13 +16,14 @@ The former team has implemented the SmartMPSDockingRoboCup component.
 \end{figure}
 
 Their idea was to combine the detection of the MPS stations and docking to the stations in one component. The detection worked most of the time, but the docking was completely random. This chapter just describes the detection part, and the docking is described in the next chapter. 
-The combination of different tasks (detection and docking) contradict the idea of Smartsoft where concrete software components are recommended. By splitting the detection from the docking, it would also be possible to replace on the fly the detection via the laser scanner by the detection via the camera, mounted on the robot.
-Further the old SmartMPSDockingRoboCup component is implemented in a very confusing way and is hard to understand, so the team of 2018 decided to rewrite the component completely and discard the old one.
+The combination of different tasks (detection and docking) contradict the idea of SmartSoft, where separate software components for separate  skills are recommended. By splitting up detection and docking, it would also be possible to replace on the fly the detection via the laser scanner by the detection via the camera, mounted on the robot.
+Further the old SmartMPSDockingRoboCup component is implemented in a very confusing way and is hard to understand, so the team of 2018 decided to completely rewrite the component and discard the old one.
 
 
 \subsubsection{ New Version 2018}
 
-Each Skill component should satisfy one specific task. Therefor the new SmartRobotinoDetection component just detects MPS machines around the robot and the model is accordingly simple.
+Each Skill component should satisfy one specific task.\\
+Therefore the new SmartRobotinoDetection component just detects MPS machines around the robot and the component model is accordingly simple.
 
 \begin{figure}[h]
 \centering
@@ -32,10 +33,10 @@ Each Skill component should satisfy one specific task. Therefor the new SmartRob
 \end{figure}
 
 The new detection component consists of one task (e.g. DetectionTask). If this task is triggered, the component commands the robot to perform a 360 degree turn at the current position. Every detected MPS station is sent back to the Sequencer, for further processing. 
-The algorithm for the detection of the MPS station is more or less the same like the years before. But the verification of the detected MPS station has changed. The complete border of the field is excluded in the new version. Therefor it is not possible for the robot, to confuse the border of the field at the Robocup with a MPS machine. This simple approach lead into very good testing results. 
+The algorithm for the detection of the MPS station is more or less the same like the years before. However, the verification of the detected MPS station changed. The complete boundary of the field is excluded in the new version. Therefore, it is not possible for the robot, to confuse the boundary of the RoboCup field with a MPS machine. This simple approach led to very good testing results. 
 
-\paragraph{Detection Results}
-The results are still sent via the old CommStationDetectionEventResult object, which contains 
+\subsubsection{Detection Results}
+The results are sent via the CommStationDetectionEventResult object, which contains 
 
 \begin{enumerate}
 \item MPSStationDetectionResult
@@ -54,13 +55,13 @@ The CommMPSStationData vector is empty if the component did not find any MPS sta
 \item dockingPosX2 -> X coordinate of the second docking point
 \item dockingPosY1 -> Y coordinate of the first docking point
 \item dockingPosY2 -> Y coordinate of the second docking point
-\item zone -> Zone of the Robocup map where the MPS resides
+\item zone -> Zone of the RoboCup map where the MPS resides
 \end{itemize}
 
-The new detection component uses the CommMPSStationData structure though, but just sets some of the parameters. For the new docking algorithm, just the corners of the appropriate stations are relevant, so the detection just writes the first corner in the dockingPosX1 and dockingPosY1. The second corner is written in the dockingPosX2 and dockingPosY2 fields. The rest of the parameters are ignored.
+The new detection component still uses the CommMPSStationData structure. Just the corners of the appropriate stations are relevant and thus most of the other parameters are deprecated. In the future this data structure needs a clean-up. For the new docking algorithm, just the corners of the appropriate stations are relevant, so the detection just writes the first corner in the dockingPosX1 and dockingPosY1. The second corner is written in the dockingPosX2 and dockingPosY2 fields. The rest of the parameters are ignored.
 
-\paragraph{Configuration of the excluded Border}
-The component can exclude the border of the field. Therefor some smartComponentParameters can be set in the component.
+\paragraph{Configuration of the excluded Border} $\;$ \\
+The component can exclude the boundary of the field. For this, some smartComponentParameters can be set in the component:
  
 \begin{itemize}
 \item xMin
@@ -69,8 +70,8 @@ The component can exclude the border of the field. Therefor some smartComponentP
 \item yMax
 \end{itemize}
 
-Just define points in world coordinates, from where potential machines should be excluded.
-It is necessary to adjust those parameters at the Robocup, because the Robocup field is much bigger than the testing field in the laboratory.
+These just define a rectangular area in world coordinates of the RoboCup coordinate system. Potential machines outside this area are not considered and excluded.
+It is necessary to adjust those parameters at the competition, because the RoboCup field is much bigger than the testing field in the laboratory.
 To switch the feature off, just set huge numbers for xMax and yMax, and very small numbers for yMin and yMin.
 
 
