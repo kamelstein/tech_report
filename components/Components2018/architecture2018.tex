@@ -25,7 +25,7 @@ The following figure \ref{fig:architecture_overview} shows the basic architectur
 \label{fig:architecture_overview}
 \end{figure}
 
-As seen in figure \ref{fig:architecture_overview}, some parts of the system run as a copy on every robot (e.g. the sequencer or movement dependent components), and the Instruction Planner is unique in the complete RoboCup scenario. The details of the different components are described in chapter \ref{ch:components}. The following subchapters give a short description of the involved parts.
+As seen in figure \ref{fig:architecture_overview}, some parts of the system run as a copy on every robot (e.g. the Sequencer or movement dependent components), and the Instruction Planner is unique in the complete RoboCup scenario. The details of the different components are described in chapter \ref{ch:components}. The following subchapters give a short description of the involved parts.
 
 \subsection{Instruction Planner}
 The Instruction Planner takes care that the task assigned to the robotic system will be handled in an effective way. It consists of two parts, the \textbf{Fleet Management} and the \textbf{Objective Management} (see section \ref{ch:SmartRobotinoInstructionPlanner}). \\
@@ -44,8 +44,8 @@ Based on the information that is provided by all the robots, the Instruction Pla
 \subsection{Sequencer}
 The Sequencer is often referred to as the \textit{"LispServer"} and manages the events that locally occur on the robot. The purpose of the Sequencer is to coordinate the overall behavior 
 of a robot. 
-A good example is the collision free movement: The robots are able to approach a position on the field without hitting objects in their way. For this a coordination and configuration of different components is needed, 
-e.g. the \textit{Laser scanner} and the \textit{Moving components}. This is done by the Sequencer. The Sequencer receives events from the involved components. 
+A good example is the collision free movement: The robots are able to approach a position on the field without hitting objects in their way. For this, a coordination and configuration of different components is needed, 
+e.g. the \textit{Laser scanner} and the \textit{Moving components}. This is done by the Sequencer. The Sequencer receives events from the involved components and orchestrates them.
 
 \subsection{Components}
 Skills are the most low level implementations of tasks (e.g. the handling of the movement of the wheels, docking to machines, detection of machines, etc.).
